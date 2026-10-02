@@ -52,31 +52,20 @@
   .role-pill[data-active="false"]{color:var(--muted)}
   .role-pill[data-active="false"]:hover{background:var(--surface-2)}
 
-  /* ── phone frame (Terrain / Pharmacie) ── */
-  .phone-shell{width:390px;max-width:100%;margin:0 auto;background:#0B0F0D;border-radius:46px;padding:14px;box-shadow:0 30px 60px -20px rgba(10,20,15,.35), 0 0 0 2px #1b2420}
-  .phone-screen{background:var(--bg);border-radius:32px;overflow:hidden;min-height:760px;display:flex;flex-direction:column;position:relative}
-  .phone-statusbar{display:flex;align-items:center;justify-content:space-between;padding:10px 22px 4px;font-family:var(--font-mono);font-size:.72rem;font-weight:600;color:var(--fg);flex-shrink:0}
-  .phone-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:22px;background:#0B0F0D;border-radius:0 0 16px 16px;z-index:5}
-  .phone-body{flex:1;overflow-y:auto;padding:4px 18px 22px}
+  /* ── mobile app view (Terrain / Pharmacie) — real full-width app, no device mockup ── */
+  .mobile-view{width:100%;max-width:480px;margin:0 auto;min-height:calc(100vh - 61px);background:var(--bg);padding:18px 18px 40px}
 
-  /* ── browser chrome frame (Exploitation / Admin / OCP) ── */
-  .browser-shell{background:#DADFDA;border-radius:14px;padding:8px 8px 0;box-shadow:0 24px 50px -20px rgba(10,20,15,.25)}
-  .browser-bar{display:flex;align-items:center;gap:10px;padding:8px 6px}
-  .browser-dots{display:flex;gap:6px}
-  .browser-dots span{width:10px;height:10px;border-radius:999px;display:block}
-  .browser-url{flex:1;background:var(--surface);border-radius:8px;padding:.3rem .8rem;font-size:.72rem;color:var(--muted);font-family:var(--font-mono)}
-  .browser-screen{background:var(--bg);border-radius:10px 10px 0 0;overflow:hidden}
-
-  /* exploitation layout */
-  .exp-grid{display:grid;grid-template-columns:230px 1fr 300px;min-height:640px}
+  /* ── desktop dashboard (Exploitation / Admin / OCP) — real full-bleed app, no browser mockup ── */
+  .exp-grid{display:grid;grid-template-columns:230px 1fr 300px;min-height:calc(100vh - 61px)}
   @media (max-width:1100px){ .exp-grid{grid-template-columns:1fr} }
   .exp-nav{background:var(--surface);border-right:1px solid var(--border);padding:16px 10px;display:flex;flex-direction:column;gap:2px}
   .exp-nav-item{display:flex;align-items:center;gap:.6rem;padding:.6rem .7rem;border-radius:9px;font-size:.84rem;font-weight:600;color:var(--muted);cursor:pointer}
   .exp-nav-item:hover{background:var(--surface-2)}
   .exp-nav-item[data-active="true"]{background:var(--accent-soft);color:var(--accent-dark)}
   .exp-nav-badge{margin-left:auto;background:var(--danger);color:#fff;border-radius:999px;font-size:.65rem;font-weight:800;padding:.1rem .4rem;font-family:var(--font-mono)}
-  .exp-main{padding:18px;overflow-y:auto;background:var(--bg)}
-  .exp-side{background:var(--surface);border-left:1px solid var(--border);padding:16px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
+  .exp-main{padding:22px 28px;overflow-y:auto;background:var(--bg)}
+  .exp-side{background:var(--surface);border-left:1px solid var(--border);padding:18px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
+  .admin-main{padding:22px 28px;max-width:860px}
 
   /* journal */
   .journal-entry{display:flex;gap:.6rem;padding:.55rem 0;border-bottom:1px dashed var(--border)}
@@ -286,16 +275,6 @@ const DRIVER_STEPS = [
   { key:'fin',        n:'09', label:'Fin de service' },
 ];
 
-function PhoneStatusBar(){
-  const [t, setT] = useState(fmtClock());
-  useEffect(() => { const id = setInterval(()=>setT(fmtClock()), 15000); return ()=>clearInterval(id); }, []);
-  return (
-    <div className="phone-statusbar">
-      <span>{t}</span>
-      <span className="flex items-center gap-1.5"><Icon name="wifi" size={13}/><Icon name="battery" size={15}/></span>
-    </div>
-  );
-}
 
 function ChauffeurLogin({ chauffeurs, onLogin }){
   const [matricule, setMatricule] = useState('');
@@ -504,13 +483,7 @@ function TerrainView({ db, chauffeurs, tournees, pharmacies, journal }){
 
   return (
     <>
-      <div className="phone-shell">
-        <div className="phone-notch"/>
-        <div className="phone-screen">
-          <PhoneStatusBar/>
-          <div className="phone-body">{screen()}</div>
-        </div>
-      </div>
+      <div className="mobile-view">{screen()}</div>
       {problemStop && (
         <Modal onClose={()=>setProblemStop(null)} title="Signaler un problème">
           <textarea className="input" rows={4} placeholder="Décris le problème rencontré…" value={problemText} onChange={e=>setProblemText(e.target.value)}/>
@@ -626,13 +599,8 @@ function ExploitationView({ db, chauffeurs, tournees, pharmacies, depannages, jo
   const currentTournee = current ? tournees.docs.find(t=>t.chauffeurId===current.id && t.statut!=='terminee') : null;
 
   return (
-    <div className="browser-shell">
-      <div className="browser-bar">
-        <div className="browser-dots"><span style={{background:'#ED6A5E'}}/><span style={{background:'#F4BF4F'}}/><span style={{background:'#61C454'}}/></div>
-        <div className="browser-url">pharmalogistics.app / exploitation</div>
-      </div>
-      <div className="browser-screen">
-        <div className="exp-grid">
+    <>
+      <div className="exp-grid">
           <nav className="exp-nav">
             {EXP_SECTIONS.map(s => (
               <div key={s.key} className="exp-nav-item" data-active={section===s.key} onClick={()=>setSection(s.key)}>
@@ -750,7 +718,6 @@ function ExploitationView({ db, chauffeurs, tournees, pharmacies, depannages, jo
             )}
             <div className="flex-1 min-h-0"><JournalPanel db={db} journal={journal} roleLabel="Exploitation"/></div>
           </aside>
-        </div>
       </div>
 
       {showNew && <NewTourneeModal db={db} chauffeurs={chauffeurs.docs} pharmacies={pharmacies.docs} onClose={()=>setShowNew(false)}/>}
@@ -764,7 +731,7 @@ function ExploitationView({ db, chauffeurs, tournees, pharmacies, depannages, jo
           }}>Marquer résolu</button>
         </Modal>
       )}
-    </div>
+    </>
   );
 }
 
@@ -800,21 +767,15 @@ function AdminList({ db, title, path, fields, items }){
 
 function AdminView({ db, chauffeurs, vehicules, pharmacies }){
   return (
-    <div className="browser-shell">
-      <div className="browser-bar">
-        <div className="browser-dots"><span style={{background:'#ED6A5E'}}/><span style={{background:'#F4BF4F'}}/><span style={{background:'#61C454'}}/></div>
-        <div className="browser-url">pharmalogistics.app / admin</div>
-      </div>
-      <div className="browser-screen exp-main" style={{ padding:18 }}>
-        <h2 className="font-display font-extrabold text-lg mb-4">Administration</h2>
-        <div className="flex flex-col gap-4">
-          <AdminList db={db} title="Chauffeurs" path="chauffeurs" items={chauffeurs.docs}
-            fields={[{key:'nom',label:'Nom',required:true},{key:'matricule',label:'Matricule (ex. MD-1701)',required:true},{key:'vehiculeLabel',label:'Véhicule assigné'}]}/>
-          <AdminList db={db} title="Véhicules" path="vehicules" items={vehicules.docs}
-            fields={[{key:'immatriculation',label:'Immatriculation',required:true},{key:'type',label:'Type (frigo, VL…)'}]}/>
-          <AdminList db={db} title="Pharmacies" path="pharmacies" items={pharmacies.docs}
-            fields={[{key:'nom',label:'Nom',required:true},{key:'adresse',label:'Adresse'},{key:'ville',label:'Ville'}]}/>
-        </div>
+    <div className="admin-main">
+      <h2 className="font-display font-extrabold text-lg mb-4">Administration</h2>
+      <div className="flex flex-col gap-4">
+        <AdminList db={db} title="Chauffeurs" path="chauffeurs" items={chauffeurs.docs}
+          fields={[{key:'nom',label:'Nom',required:true},{key:'matricule',label:'Matricule (ex. MD-1701)',required:true},{key:'vehiculeLabel',label:'Véhicule assigné'}]}/>
+        <AdminList db={db} title="Véhicules" path="vehicules" items={vehicules.docs}
+          fields={[{key:'immatriculation',label:'Immatriculation',required:true},{key:'type',label:'Type (frigo, VL…)'}]}/>
+        <AdminList db={db} title="Pharmacies" path="pharmacies" items={pharmacies.docs}
+          fields={[{key:'nom',label:'Nom',required:true},{key:'adresse',label:'Adresse'},{key:'ville',label:'Ville'}]}/>
       </div>
     </div>
   );
@@ -828,31 +789,25 @@ function OcpView({ tournees, depannages, chauffeurs }){
   const openDep = depannages.docs.filter(d=>d.statut!=='resolu');
   const chauffeurById = useMemo(()=>{ const m={}; chauffeurs.docs.forEach(c=>m[c.id]=c); return m; }, [chauffeurs.docs]);
   return (
-    <div className="browser-shell">
-      <div className="browser-bar">
-        <div className="browser-dots"><span style={{background:'#ED6A5E'}}/><span style={{background:'#F4BF4F'}}/><span style={{background:'#61C454'}}/></div>
-        <div className="browser-url">pharmalogistics.app / ocp · lecture seule</div>
+    <div className="admin-main">
+      <h2 className="font-display font-extrabold text-lg mb-4">Suivi OCP <span className="eyebrow" style={{fontWeight:700}}>· lecture seule</span></h2>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+        <Tile icon="truck" label="Tournées actives" value={activeTournees.length}/>
+        <Tile icon="check" label="Arrêts livrés" value={delivered} sub={`sur ${allStops.length}`}/>
+        <Tile icon="wrench" label="Dépannages ouverts" value={openDep.length} tone={openDep.length?'danger':undefined}/>
       </div>
-      <div className="browser-screen exp-main" style={{ padding:18 }}>
-        <h2 className="font-display font-extrabold text-lg mb-4">Suivi OCP</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-          <Tile icon="truck" label="Tournées actives" value={activeTournees.length}/>
-          <Tile icon="check" label="Arrêts livrés" value={delivered} sub={`sur ${allStops.length}`}/>
-          <Tile icon="wrench" label="Dépannages ouverts" value={openDep.length} tone={openDep.length?'danger':undefined}/>
-        </div>
-        <div className="flex flex-col gap-2">
-          {activeTournees.map(t => {
-            const stops = t.stops||[]; const del = stops.filter(s=>s.statut==='livre').length;
-            const ch = chauffeurById[t.chauffeurId];
-            return (
-              <div key={t.id} className="card p-4 flex items-center justify-between">
-                <div><div className="font-semibold">Tournée {t.numero||t.id}</div><div className="text-xs" style={{color:'var(--muted)'}}>{ch?(ch.nom||ch.matricule):'—'} · {del}/{stops.length}</div></div>
-                <StatusChip statut={t.etapeActuelle==='en_route'?'en_route':'a_venir'}/>
-              </div>
-            );
-          })}
-          {activeTournees.length===0 && <EmptyState icon="eye" title="Aucune tournée en cours" body="Rien à surveiller pour l'instant."/>}
-        </div>
+      <div className="flex flex-col gap-2">
+        {activeTournees.map(t => {
+          const stops = t.stops||[]; const del = stops.filter(s=>s.statut==='livre').length;
+          const ch = chauffeurById[t.chauffeurId];
+          return (
+            <div key={t.id} className="card p-4 flex items-center justify-between">
+              <div><div className="font-semibold">Tournée {t.numero||t.id}</div><div className="text-xs" style={{color:'var(--muted)'}}>{ch?(ch.nom||ch.matricule):'—'} · {del}/{stops.length}</div></div>
+              <StatusChip statut={t.etapeActuelle==='en_route'?'en_route':'a_venir'}/>
+            </div>
+          );
+        })}
+        {activeTournees.length===0 && <EmptyState icon="eye" title="Aucune tournée en cours" body="Rien à surveiller pour l'instant."/>}
       </div>
     </div>
   );
@@ -872,48 +827,42 @@ function PharmacieView({ pharmacies, tournees, chauffeurs }){
   const chauffeur = stopInfo ? chauffeurs.docs.find(c=>c.id===stopInfo.tournee.chauffeurId) : null;
 
   return (
-    <div className="phone-shell">
-      <div className="phone-notch"/>
-      <div className="phone-screen">
-        <PhoneStatusBar/>
-        <div className="phone-body">
-          {!pharmaId ? (
-            <div className="flex flex-col gap-3 pt-4">
-              <div className="eyebrow">Choisir ma pharmacie</div>
-              {pharmacies.docs.map(p => (
-                <button key={p.id} className="card p-3 text-left" onClick={()=>setPharmaId(p.id)}>
-                  <div className="font-semibold">{p.nom}</div>
-                  <div className="text-xs" style={{ color:'var(--muted)' }}>{p.adresse}, {p.ville}</div>
-                </button>
-              ))}
-              {pharmacies.docs.length===0 && <EmptyState icon="pin" title="Aucune pharmacie" body="Ajoute des pharmacies depuis Admin."/>}
-            </div>
-          ) : (
-            <div className="flex flex-col gap-4 pt-4">
-              <div className="flex items-center justify-between">
-                <div className="font-display font-bold">{pharma?.nom}</div>
-                <button className="opacity-60" onClick={()=>setPharmaId(null)}><Icon name="x" size={16}/></button>
-              </div>
-              {!stopInfo && <EmptyState icon="clock" title="Aucune livraison prévue" body="Aucune tournée ne dessert cette pharmacie aujourd'hui."/>}
-              {stopInfo && (
-                <div className="card p-4 flex flex-col gap-3">
-                  <StatusChip statut={stopInfo.stop.statut}/>
-                  <div className="text-sm">Chauffeur : {chauffeur ? (chauffeur.nom||chauffeur.matricule) : '—'}</div>
-                  <div className="text-sm">Tournée {stopInfo.tournee.numero||stopInfo.tournee.id}</div>
-                  {stopInfo.stop.statut==='en_route' && <div className="text-xs" style={{color:'var(--info)'}}>Le chauffeur est en route vers votre officine.</div>}
-                  {stopInfo.stop.statut==='arrive' && <div className="text-xs" style={{color:'var(--warning)'}}>Le chauffeur est arrivé.</div>}
-                  {stopInfo.stop.statut==='livre' && (
-                    <>
-                      <div className="text-xs" style={{color:'var(--success)'}}>Colis livré à {fmtTime(stopInfo.stop.heureLivraison)}.</div>
-                      <PhotoField label="Photo colis à reprendre"/>
-                    </>
-                  )}
-                </div>
+    <div className="mobile-view">
+      {!pharmaId ? (
+        <div className="flex flex-col gap-3">
+          <div className="eyebrow">Choisir ma pharmacie</div>
+          {pharmacies.docs.map(p => (
+            <button key={p.id} className="card p-3 text-left" onClick={()=>setPharmaId(p.id)}>
+              <div className="font-semibold">{p.nom}</div>
+              <div className="text-xs" style={{ color:'var(--muted)' }}>{p.adresse}, {p.ville}</div>
+            </button>
+          ))}
+          {pharmacies.docs.length===0 && <EmptyState icon="pin" title="Aucune pharmacie" body="Ajoute des pharmacies depuis Admin."/>}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <div className="font-display font-bold">{pharma?.nom}</div>
+            <button className="opacity-60" onClick={()=>setPharmaId(null)}><Icon name="x" size={16}/></button>
+          </div>
+          {!stopInfo && <EmptyState icon="clock" title="Aucune livraison prévue" body="Aucune tournée ne dessert cette pharmacie aujourd'hui."/>}
+          {stopInfo && (
+            <div className="card p-4 flex flex-col gap-3">
+              <StatusChip statut={stopInfo.stop.statut}/>
+              <div className="text-sm">Chauffeur : {chauffeur ? (chauffeur.nom||chauffeur.matricule) : '—'}</div>
+              <div className="text-sm">Tournée {stopInfo.tournee.numero||stopInfo.tournee.id}</div>
+              {stopInfo.stop.statut==='en_route' && <div className="text-xs" style={{color:'var(--info)'}}>Le chauffeur est en route vers votre officine.</div>}
+              {stopInfo.stop.statut==='arrive' && <div className="text-xs" style={{color:'var(--warning)'}}>Le chauffeur est arrivé.</div>}
+              {stopInfo.stop.statut==='livre' && (
+                <>
+                  <div className="text-xs" style={{color:'var(--success)'}}>Colis livré à {fmtTime(stopInfo.stop.heureLivraison)}.</div>
+                  <PhotoField label="Photo colis à reprendre"/>
+                </>
               )}
             </div>
           )}
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -962,11 +911,11 @@ function App(){
         </div>
       </header>
 
-      <main className="flex-1 px-4 py-8" style={{ display:'flex', justifyContent:'center' }}>
+      <main className="flex-1" style={{ display:'flex' }}>
         {status !== 'ready' ? (
-          <div className="text-sm pulse" style={{ color:'var(--muted)' }}>Connexion à la base de données…</div>
+          <div className="text-sm pulse" style={{ color:'var(--muted)', margin:'40px auto' }}>Connexion à la base de données…</div>
         ) : (
-          <div style={{ width:'100%', maxWidth: role==='terrain'||role==='pharmacie' ? 420 : 1100 }}>
+          <div style={{ width:'100%' }}>
             {role==='terrain' && <TerrainView db={db} chauffeurs={chauffeurs} tournees={tournees} pharmacies={pharmacies} journal={journal}/>}
             {role==='exploitation' && <ExploitationView db={db} chauffeurs={chauffeurs} tournees={tournees} pharmacies={pharmacies} depannages={depannages} journal={journal}/>}
             {role==='admin' && <AdminView db={db} chauffeurs={chauffeurs} vehicules={vehicules} pharmacies={pharmacies}/>}
