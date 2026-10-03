@@ -434,6 +434,13 @@ return (
 }
 case 'depose': {
 if (!currentStop) { setTimeout(()=>goto('rangement'),0); return null; }
+if (currentStop.statut === 'a_venir') {
+// Après confirmation d'une livraison, le prochain arrêt repasse par l'écran
+// Navigation (Waze/Maps + "Je prends la route") avant de revenir ici,
+// sinon aucun bouton d'action n'est affiché pour cet arrêt.
+setTimeout(()=>goto('navigation'),0);
+return null;
+}
 const ph = pharmaById[currentStop.pharmacieId] || {};
 return (
 <div className="flex flex-col gap-4 pt-4">
