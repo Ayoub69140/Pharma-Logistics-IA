@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PharmaLogistics IA</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230F7B5C'/%3E%3Cpath d='M12 6v12M6 12h12' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0F7B5C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PharmaLogistics">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
@@ -876,6 +883,15 @@ const ROLES = [
   { key:'pharmacie', label:'Pharmacie', icon:'cross' },
 ];
 
+function getLockedRole(){
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get('role');
+    if (r && ROLES.some(role => role.key === r)) return r;
+  } catch(e) {}
+  return null;
+}
+
 function App(){
   const { db, status } = useFirebase();
   const chauffeurs = useCollection(db, 'chauffeurs');
@@ -884,7 +900,8 @@ function App(){
   const tournees = useCollection(db, 'tournees');
   const depannages = useCollection(db, 'depannages');
   const journal = useJournal(db);
-  const [role, setRole] = useState('terrain');
+  const lockedRole = useMemo(() => getLockedRole(), []);
+  const [role, setRole] = useState(lockedRole || 'terrain');
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -897,13 +914,15 @@ function App(){
               <div className="text-[11px]" style={{ color:'var(--muted)' }}>Distribution pharmaceutique</div>
             </div>
           </div>
-          <div className="flex items-center gap-1 overflow-x-auto">
-            {ROLES.map(r => (
-              <button key={r.key} className="role-pill" data-active={role===r.key} onClick={()=>setRole(r.key)}>
-                <Icon name={r.icon} size={14}/> {r.label}
-              </button>
-            ))}
-          </div>
+          {!lockedRole && (
+            <div className="flex items-center gap-1 overflow-x-auto">
+              {ROLES.map(r => (
+                <button key={r.key} className="role-pill" data-active={role===r.key} onClick={()=>setRole(r.key)}>
+                  <Icon name={r.icon} size={14}/> {r.label}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="flex items-center gap-1.5 text-xs" style={{ color:'var(--muted)' }}>
             <span className="dot" style={{ background: status==='ready' ? 'var(--success)' : 'var(--warning)' }}/>
             {status==='ready' ? 'Connecté' : status==='error' ? 'Hors ligne' : 'Connexion…'}
@@ -929,6 +948,13 @@ function App(){
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('sw.js').catch(function(){ /* ignore */ });
+    });
+  }
 </script>
 </body>
 </html>
