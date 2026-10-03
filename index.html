@@ -21,75 +21,75 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <style>
-  :root{
-    --bg:#F6F8F5; --surface:#FFFFFF; --surface-2:#EFF3EE; --fg:#13211B; --muted:#5C6F64;
-    --border:#E1E7DF; --accent:#0F7B5C; --accent-dark:#0B5E46; --accent-fg:#FFFFFF; --accent-soft:#E3F2EA;
-    --success:#1E9E5A; --success-soft:#E4F5EA; --warning:#C9821B; --warning-soft:#FBEDD7;
-    --danger:#C1403A; --danger-soft:#FAE4E2; --info:#2563A6; --info-soft:#E4EEF7;
-    --font-display:'Manrope',system-ui,sans-serif; --font-body:'Public Sans',system-ui,sans-serif; --font-mono:'IBM Plex Mono',ui-monospace,monospace;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{background:var(--bg);color:var(--fg);font-family:var(--font-body)}
-  h1,h2,h3,.font-display{font-family:var(--font-display)}
-  .font-mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
-  .eyebrow{font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-  ::-webkit-scrollbar{height:8px;width:8px}
-  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px}
-  .surface2{background:var(--surface-2)}
-  .btn{font-family:var(--font-body);font-weight:700;border-radius:10px;padding:.6rem 1rem;transition:filter .15s,transform .1s;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;white-space:nowrap;cursor:pointer;border:none;font-size:.88rem}
-  .btn:active{filter:brightness(.92);transform:scale(.99)}
-  .btn-accent{background:var(--accent);color:var(--accent-fg)}
-  .btn-outline{background:transparent;color:var(--fg);border:1px solid var(--border)}
-  .btn-soft{background:var(--surface-2);color:var(--fg)}
-  .btn-danger{background:var(--danger-soft);color:var(--danger)}
-  .btn:disabled{opacity:.4;pointer-events:none}
-  .chip{border-radius:999px;padding:.3rem .7rem;font-size:.7rem;font-weight:700;letter-spacing:.02em;display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap}
-  .input{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;color:var(--fg);font-family:var(--font-body);width:100%;font-size:.9rem}
-  .input:focus{outline:2px solid var(--accent);outline-offset:1px}
-  .dot{width:8px;height:8px;border-radius:999px;display:inline-block;flex-shrink:0}
-  .pulse{animation:pulse 1.8s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  [hidden]{display:none!important}
+:root{
+--bg:#F6F8F5; --surface:#FFFFFF; --surface-2:#EFF3EE; --fg:#13211B; --muted:#5C6F64;
+--border:#E1E7DF; --accent:#0F7B5C; --accent-dark:#0B5E46; --accent-fg:#FFFFFF; --accent-soft:#E3F2EA;
+--success:#1E9E5A; --success-soft:#E4F5EA; --warning:#C9821B; --warning-soft:#FBEDD7;
+--danger:#C1403A; --danger-soft:#FAE4E2; --info:#2563A6; --info-soft:#E4EEF7;
+--font-display:'Manrope',system-ui,sans-serif; --font-body:'Public Sans',system-ui,sans-serif; --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body)}
+h1,h2,h3,.font-display{font-family:var(--font-display)}
+.font-mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+::-webkit-scrollbar{height:8px;width:8px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px}
+.surface2{background:var(--surface-2)}
+.btn{font-family:var(--font-body);font-weight:700;border-radius:10px;padding:.6rem 1rem;transition:filter .15s,transform .1s;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;white-space:nowrap;cursor:pointer;border:none;font-size:.88rem}
+.btn:active{filter:brightness(.92);transform:scale(.99)}
+.btn-accent{background:var(--accent);color:var(--accent-fg)}
+.btn-outline{background:transparent;color:var(--fg);border:1px solid var(--border)}
+.btn-soft{background:var(--surface-2);color:var(--fg)}
+.btn-danger{background:var(--danger-soft);color:var(--danger)}
+.btn:disabled{opacity:.4;pointer-events:none}
+.chip{border-radius:999px;padding:.3rem .7rem;font-size:.7rem;font-weight:700;letter-spacing:.02em;display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap}
+.input{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.6rem .8rem;color:var(--fg);font-family:var(--font-body);width:100%;font-size:.9rem}
+.input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.dot{width:8px;height:8px;border-radius:999px;display:inline-block;flex-shrink:0}
+.pulse{animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+[hidden]{display:none!important}
 
-  /* role switcher */
-  .role-pill{display:flex;align-items:center;gap:.4rem;border-radius:10px;padding:.5rem .8rem;border:1px solid transparent;font-size:.8rem;font-weight:700;cursor:pointer;background:transparent}
-  .role-pill[data-active="true"]{background:var(--accent);color:var(--accent-fg)}
-  .role-pill[data-active="false"]{color:var(--muted)}
-  .role-pill[data-active="false"]:hover{background:var(--surface-2)}
+/* role switcher */
+.role-pill{display:flex;align-items:center;gap:.4rem;border-radius:10px;padding:.5rem .8rem;border:1px solid transparent;font-size:.8rem;font-weight:700;cursor:pointer;background:transparent}
+.role-pill[data-active="true"]{background:var(--accent);color:var(--accent-fg)}
+.role-pill[data-active="false"]{color:var(--muted)}
+.role-pill[data-active="false"]:hover{background:var(--surface-2)}
 
-  /* ── mobile app view (Terrain / Pharmacie) — real full-width app, no device mockup ── */
-  .mobile-view{width:100%;max-width:480px;margin:0 auto;min-height:calc(100vh - 61px);background:var(--bg);padding:18px 18px 40px}
+/* ── mobile app view (Terrain / Pharmacie) — real full-width app, no device mockup ── */
+.mobile-view{width:100%;max-width:480px;margin:0 auto;min-height:calc(100vh - 61px);background:var(--bg);padding:18px 18px 40px}
 
-  /* ── desktop dashboard (Exploitation / Admin / OCP) — real full-bleed app, no browser mockup ── */
-  .exp-grid{display:grid;grid-template-columns:230px 1fr 300px;min-height:calc(100vh - 61px)}
-  @media (max-width:1100px){ .exp-grid{grid-template-columns:1fr} }
-  .exp-nav{background:var(--surface);border-right:1px solid var(--border);padding:16px 10px;display:flex;flex-direction:column;gap:2px}
-  .exp-nav-item{display:flex;align-items:center;gap:.6rem;padding:.6rem .7rem;border-radius:9px;font-size:.84rem;font-weight:600;color:var(--muted);cursor:pointer}
-  .exp-nav-item:hover{background:var(--surface-2)}
-  .exp-nav-item[data-active="true"]{background:var(--accent-soft);color:var(--accent-dark)}
-  .exp-nav-badge{margin-left:auto;background:var(--danger);color:#fff;border-radius:999px;font-size:.65rem;font-weight:800;padding:.1rem .4rem;font-family:var(--font-mono)}
-  .exp-main{padding:22px 28px;overflow-y:auto;background:var(--bg)}
-  .exp-side{background:var(--surface);border-left:1px solid var(--border);padding:18px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
-  .admin-main{padding:22px 28px;max-width:860px}
+/* ── desktop dashboard (Exploitation / Admin / OCP) — real full-bleed app, no browser mockup ── */
+.exp-grid{display:grid;grid-template-columns:230px 1fr 300px;min-height:calc(100vh - 61px)}
+@media (max-width:1100px){ .exp-grid{grid-template-columns:1fr} }
+.exp-nav{background:var(--surface);border-right:1px solid var(--border);padding:16px 10px;display:flex;flex-direction:column;gap:2px}
+.exp-nav-item{display:flex;align-items:center;gap:.6rem;padding:.6rem .7rem;border-radius:9px;font-size:.84rem;font-weight:600;color:var(--muted);cursor:pointer}
+.exp-nav-item:hover{background:var(--surface-2)}
+.exp-nav-item[data-active="true"]{background:var(--accent-soft);color:var(--accent-dark)}
+.exp-nav-badge{margin-left:auto;background:var(--danger);color:#fff;border-radius:999px;font-size:.65rem;font-weight:800;padding:.1rem .4rem;font-family:var(--font-mono)}
+.exp-main{padding:22px 28px;overflow-y:auto;background:var(--bg)}
+.exp-side{background:var(--surface);border-left:1px solid var(--border);padding:18px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
+.admin-main{padding:22px 28px;max-width:860px}
 
-  /* journal */
-  .journal-entry{display:flex;gap:.6rem;padding:.55rem 0;border-bottom:1px dashed var(--border)}
-  .journal-entry:last-child{border-bottom:none}
-  .journal-time{font-family:var(--font-mono);font-size:.68rem;color:var(--muted);flex-shrink:0;padding-top:1px}
+/* journal */
+.journal-entry{display:flex;gap:.6rem;padding:.55rem 0;border-bottom:1px dashed var(--border)}
+.journal-entry:last-child{border-bottom:none}
+.journal-time{font-family:var(--font-mono);font-size:.68rem;color:var(--muted);flex-shrink:0;padding-top:1px}
 
-  /* step rail (driver flow) */
-  .step-rail{position:relative}
-  .step-rail::before{content:"";position:absolute;left:15px;top:4px;bottom:4px;width:2px;background:var(--border)}
-  .step-row{position:relative;display:flex;gap:12px;padding-bottom:18px}
-  .step-dot{width:32px;height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;z-index:1;position:relative;flex-shrink:0;font-family:var(--font-mono);border:2px solid var(--border);background:var(--surface);color:var(--muted)}
-  .step-dot[data-state="done"]{background:var(--accent);border-color:var(--accent);color:#fff}
-  .step-dot[data-state="active"]{background:var(--surface);border-color:var(--accent);color:var(--accent)}
+/* step rail (driver flow) */
+.step-rail{position:relative}
+.step-rail::before{content:"";position:absolute;left:15px;top:4px;bottom:4px;width:2px;background:var(--border)}
+.step-row{position:relative;display:flex;gap:12px;padding-bottom:18px}
+.step-dot{width:32px;height:32px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;z-index:1;position:relative;flex-shrink:0;font-family:var(--font-mono);border:2px solid var(--border);background:var(--surface);color:var(--muted)}
+.step-dot[data-state="done"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.step-dot[data-state="active"]{background:var(--surface);border-color:var(--accent);color:var(--accent)}
 
-  /* pin pad */
-  .pin-dot{width:13px;height:13px;border-radius:999px;background:var(--border)}
-  .pin-dot[data-filled="true"]{background:var(--accent)}
+/* pin pad */
+.pin-dot{width:13px;height:13px;border-radius:999px;background:var(--border)}
+.pin-dot[data-filled="true"]{background:var(--accent)}
 </style>
 </head>
 <body>
@@ -100,861 +100,867 @@ const { useState, useEffect, useRef, useMemo, useCallback } = React;
 
 /* ═══════════════════════ Firebase bootstrap ═══════════════════════ */
 const firebaseConfig = {
-  apiKey: "AIzaSyDEfflPd_LJFxnpPi6ubihCmqd6695R5pg",
-  authDomain: "pharmalogistics-ia.firebaseapp.com",
-  projectId: "pharmalogistics-ia",
-  storageBucket: "pharmalogistics-ia.firebasestorage.app",
-  messagingSenderId: "418952224108",
-  appId: "1:418952224108:web:fdee124a85ba65879a6749"
+apiKey: "AIzaSyDEfflPd_LJFxnpPi6ubihCmqd6695R5pg",
+authDomain: "pharmalogistics-ia.firebaseapp.com",
+projectId: "pharmalogistics-ia",
+storageBucket: "pharmalogistics-ia.firebasestorage.app",
+messagingSenderId: "418952224108",
+appId: "1:418952224108:web:fdee124a85ba65879a6749"
 };
 firebase.initializeApp(firebaseConfig);
 const fbAuth = firebase.auth();
 const fbDb = firebase.firestore();
 
 function useFirebase(){
-  const [state, setState] = useState({ db:null, uid:null, status:'connecting' });
-  useEffect(() => {
-    let alive = true;
-    const unsub = fbAuth.onAuthStateChanged(user => {
-      if (!alive) return;
-      if (user) setState({ db: fbDb, uid: user.uid, status:'ready' });
-    });
-    fbAuth.signInAnonymously().catch(() => { if (alive) setState(s => ({ ...s, status:'error' })); });
-    return () => { alive = false; unsub(); };
-  }, []);
-  return state;
+const [state, setState] = useState({ db:null, uid:null, status:'connecting' });
+useEffect(() => {
+let alive = true;
+const unsub = fbAuth.onAuthStateChanged(user => {
+if (!alive) return;
+if (user) setState({ db: fbDb, uid: user.uid, status:'ready' });
+});
+fbAuth.signInAnonymously().catch(() => { if (alive) setState(s => ({ ...s, status:'error' })); });
+return () => { alive = false; unsub(); };
+}, []);
+return state;
 }
 
 function useCollection(db, path){
-  const [state, setState] = useState({ docs: [], loading: true, error: null });
-  useEffect(() => {
-    if (!db) return;
-    const unsub = fbDb.collection(path).onSnapshot(
-      snap => setState({ docs: snap.docs.map(d => ({ id:d.id, ...d.data() })), loading:false, error:null }),
-      err => setState(s => ({ ...s, loading:false, error:String(err) }))
-    );
-    return () => unsub();
-  }, [db, path]);
-  return state;
+const [state, setState] = useState({ docs: [], loading: true, error: null });
+useEffect(() => {
+if (!db) return;
+const unsub = fbDb.collection(path).onSnapshot(
+snap => setState({ docs: snap.docs.map(d => ({ id:d.id, ...d.data() })), loading:false, error:null }),
+err => setState(s => ({ ...s, loading:false, error:String(err) }))
+);
+return () => unsub();
+}, [db, path]);
+return state;
 }
 
 /* ═══════════════════════ helpers ═══════════════════════ */
 function cx(...a){ return a.filter(Boolean).join(' '); }
 function fmtTime(ts){
-  if(!ts) return '—';
-  try { return new Date(ts).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); }
-  catch(e){ return '—'; }
+if(!ts) return '—';
+try { return new Date(ts).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}); }
+catch(e){ return '—'; }
 }
 function fmtClock(){
-  return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
 }
 function wazeLink(address){ return 'https://waze.com/ul?q=' + encodeURIComponent(address) + '&navigate=yes'; }
 function mapsLink(address){ return 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(address); }
 
 const STOP_LABELS = {
-  a_venir:  { label:'À venir',  fg:'var(--muted)',   soft:'var(--surface-2)' },
-  en_route: { label:'En route', fg:'var(--info)',    soft:'var(--info-soft)' },
-  arrive:   { label:'Arrivé',   fg:'var(--warning)', soft:'var(--warning-soft)' },
-  livre:    { label:'Livré',    fg:'var(--success)', soft:'var(--success-soft)' },
-  probleme: { label:'Problème', fg:'var(--danger)',  soft:'var(--danger-soft)' },
+a_venir: { label:'À venir', fg:'var(--muted)', soft:'var(--surface-2)' },
+en_route: { label:'En route', fg:'var(--info)', soft:'var(--info-soft)' },
+arrive: { label:'Arrivé', fg:'var(--warning)', soft:'var(--warning-soft)' },
+livre: { label:'Livré', fg:'var(--success)', soft:'var(--success-soft)' },
+probleme: { label:'Problème', fg:'var(--danger)', soft:'var(--danger-soft)' },
 };
 function StatusChip({ statut }){
-  const s = STOP_LABELS[statut] || STOP_LABELS.a_venir;
-  return <span className="chip" style={{ color:s.fg, background:s.soft }}><span className="dot" style={{ background:s.fg }}></span>{s.label}</span>;
+const s = STOP_LABELS[statut] || STOP_LABELS.a_venir;
+return <span className="chip" style={{ color:s.fg, background:s.soft }}><span className="dot" style={{ background:s.fg }}></span>{s.label}</span>;
 }
 
 function Icon({ name, size=18, className }){
-  const common = { width:size, height:size, viewBox:"0 0 24 24", fill:"none", stroke:"currentColor",
-    strokeWidth:1.8, strokeLinecap:"round", strokeLinejoin:"round", className };
-  switch(name){
-    case 'truck': return <svg {...common}><rect x="1" y="7" width="13" height="10"/><path d="M14 10h4l4 4v3h-8z"/><circle cx="6" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/></svg>;
-    case 'radio': return <svg {...common}><circle cx="12" cy="13" r="3"/><path d="M7.5 9.5a6.5 6.5 0 0 1 9 0M4.8 6.8a10.5 10.5 0 0 1 14.4 0"/><path d="M8 21l4-5 4 5"/></svg>;
-    case 'settings': return <svg {...common}><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.4.8a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.4a7 7 0 0 0-2 1.2l-2.4-.8-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-.8a7 7 0 0 0 2 1.2L10 21h4l.5-2.4a7 7 0 0 0 2-1.2l2.4.8 2-3.4-2-1.6c.1-.4.1-.8.1-1.2z"/></svg>;
-    case 'eye': return <svg {...common}><path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg>;
-    case 'cross': return <svg {...common}><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg>;
-    case 'camera': return <svg {...common}><path d="M4 8h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="14" r="3.3"/></svg>;
-    case 'check': return <svg {...common}><path d="M20 6L9 17l-5-5"/></svg>;
-    case 'alert': return <svg {...common}><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17.5h.01"/></svg>;
-    case 'clock': return <svg {...common}><circle cx="12" cy="12" r="9.5"/><path d="M12 7v5l3.5 2"/></svg>;
-    case 'package': return <svg {...common}><path d="M3.5 7.5L12 3l8.5 4.5V17L12 21.5 3.5 17z"/><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9.5"/></svg>;
-    case 'chevron': return <svg {...common}><path d="M9 6l6 6-6 6"/></svg>;
-    case 'plus': return <svg {...common}><path d="M12 5v14M5 12h14"/></svg>;
-    case 'x': return <svg {...common}><path d="M6 6l12 12M18 6L6 18"/></svg>;
-    case 'pin': return <svg {...common}><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>;
-    case 'phone': return <svg {...common}><path d="M5 4h3.2l1.3 4.5-2 1.5a13 13 0 0 0 6.5 6.5l1.5-2L20 15.8V19a2 2 0 0 1-2.2 2C9.6 20.6 3.4 14.4 3 6.2A2 2 0 0 1 5 4z"/></svg>;
-    case 'user': return <svg {...common}><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>;
-    case 'wifi': return <svg {...common}><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1"/></svg>;
-    case 'snow': return <svg {...common}><path d="M12 2v20M4.2 7l15.6 10M19.8 7L4.2 17"/></svg>;
-    case 'shield': return <svg {...common}><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/></svg>;
-    case 'box': return <svg {...common}><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M8 3.5v17M3.5 8h17"/></svg>;
-    case 'arrow-left': return <svg {...common}><path d="M19 12H5M11 6l-6 6 6 6"/></svg>;
-    case 'map': return <svg {...common}><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>;
-    case 'nav': return <svg {...common}><path d="M12 2L4 20l8-4 8 4z"/></svg>;
-    case 'wrench': return <svg {...common}><path d="M14.7 6.3a4 4 0 0 1-5.3 5.3L4 17l3 3 5.4-5.4a4 4 0 0 1 5.3-5.3l-3-3z"/></svg>;
-    case 'calendar': return <svg {...common}><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>;
-    case 'message': return <svg {...common}><path d="M4 5h16v11H8l-4 4z"/></svg>;
-    case 'battery': return <svg {...common}><rect x="2" y="8" width="18" height="8" rx="1.5"/><path d="M22 10v4"/></svg>;
-    case 'lock': return <svg {...common}><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
-    case 'power': return <svg {...common}><path d="M12 2v9"/><path d="M6 6a8 8 0 1 0 12 0"/></svg>;
-    default: return <svg {...common}><circle cx="12" cy="12" r="9"/></svg>;
-  }
+const common = { width:size, height:size, viewBox:"0 0 24 24", fill:"none", stroke:"currentColor",
+strokeWidth:1.8, strokeLinecap:"round", strokeLinejoin:"round", className };
+switch(name){
+case 'truck': return <svg {...common}><rect x="1" y="7" width="13" height="10"/><path d="M14 10h4l4 4v3h-8z"/><circle cx="6" cy="19" r="1.8"/><circle cx="17.5" cy="19" r="1.8"/></svg>;
+case 'radio': return <svg {...common}><circle cx="12" cy="13" r="3"/><path d="M7.5 9.5a6.5 6.5 0 0 1 9 0M4.8 6.8a10.5 10.5 0 0 1 14.4 0"/><path d="M8 21l4-5 4 5"/></svg>;
+case 'settings': return <svg {...common}><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.4.8a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.4a7 7 0 0 0-2 1.2l-2.4-.8-2 3.4 2 1.6A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.6 2 3.4 2.4-.8a7 7 0 0 0 2 1.2L10 21h4l.5-2.4a7 7 0 0 0 2-1.2l2.4.8 2-3.4-2-1.6c.1-.4.1-.8.1-1.2z"/></svg>;
+case 'eye': return <svg {...common}><path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg>;
+case 'cross': return <svg {...common}><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg>;
+case 'camera': return <svg {...common}><path d="M4 8h3l2-2h6l2 2h3v12H4z"/><circle cx="12" cy="14" r="3.3"/></svg>;
+case 'check': return <svg {...common}><path d="M20 6L9 17l-5-5"/></svg>;
+case 'alert': return <svg {...common}><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17.5h.01"/></svg>;
+case 'clock': return <svg {...common}><circle cx="12" cy="12" r="9.5"/><path d="M12 7v5l3.5 2"/></svg>;
+case 'package': return <svg {...common}><path d="M3.5 7.5L12 3l8.5 4.5V17L12 21.5 3.5 17z"/><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9.5"/></svg>;
+case 'chevron': return <svg {...common}><path d="M9 6l6 6-6 6"/></svg>;
+case 'plus': return <svg {...common}><path d="M12 5v14M5 12h14"/></svg>;
+case 'x': return <svg {...common}><path d="M6 6l12 12M18 6L6 18"/></svg>;
+case 'pin': return <svg {...common}><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>;
+case 'phone': return <svg {...common}><path d="M5 4h3.2l1.3 4.5-2 1.5a13 13 0 0 0 6.5 6.5l1.5-2L20 15.8V19a2 2 0 0 1-2.2 2C9.6 20.6 3.4 14.4 3 6.2A2 2 0 0 1 5 4z"/></svg>;
+case 'user': return <svg {...common}><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>;
+case 'wifi': return <svg {...common}><path d="M2 8.5a15 15 0 0 1 20 0M5.5 12a10 10 0 0 1 13 0M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1"/></svg>;
+case 'snow': return <svg {...common}><path d="M12 2v20M4.2 7l15.6 10M19.8 7L4.2 17"/></svg>;
+case 'shield': return <svg {...common}><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/><path d="M9 12l2 2 4-4"/></svg>;
+case 'box': return <svg {...common}><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M8 3.5v17M3.5 8h17"/></svg>;
+case 'arrow-left': return <svg {...common}><path d="M19 12H5M11 6l-6 6 6 6"/></svg>;
+case 'map': return <svg {...common}><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>;
+case 'nav': return <svg {...common}><path d="M12 2L4 20l8-4 8 4z"/></svg>;
+case 'wrench': return <svg {...common}><path d="M14.7 6.3a4 4 0 0 1-5.3 5.3L4 17l3 3 5.4-5.4a4 4 0 0 1 5.3-5.3l-3-3z"/></svg>;
+case 'calendar': return <svg {...common}><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>;
+case 'message': return <svg {...common}><path d="M4 5h16v11H8l-4 4z"/></svg>;
+case 'battery': return <svg {...common}><rect x="2" y="8" width="18" height="8" rx="1.5"/><path d="M22 10v4"/></svg>;
+case 'lock': return <svg {...common}><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
+case 'power': return <svg {...common}><path d="M12 2v9"/><path d="M6 6a8 8 0 1 0 12 0"/></svg>;
+default: return <svg {...common}><circle cx="12" cy="12" r="9"/></svg>;
+}
 }
 
 /* ═══════════════════════ shared small components ═══════════════════════ */
 function Tile({ icon, label, value, sub, tone }){
-  const fg = tone ? `var(--${tone})` : 'var(--fg)';
-  return (
-    <div className="card p-4 flex items-center gap-3 min-w-0">
-      <div className="shrink-0 rounded-xl p-2.5" style={{ background:'var(--surface-2)', color:fg }}><Icon name={icon} size={20}/></div>
-      <div className="min-w-0">
-        <div className="text-2xl font-display font-extrabold leading-none" style={{ color:fg }}>{value}</div>
-        <div className="eyebrow mt-1 truncate">{label}</div>
-        {sub && <div className="text-xs mt-0.5" style={{ color:'var(--muted)' }}>{sub}</div>}
-      </div>
-    </div>
-  );
+const fg = tone ? `var(--${tone})` : 'var(--fg)';
+return (
+<div className="card p-4 flex items-center gap-3 min-w-0">
+<div className="shrink-0 rounded-xl p-2.5" style={{ background:'var(--surface-2)', color:fg }}><Icon name={icon} size={20}/></div>
+<div className="min-w-0">
+<div className="text-2xl font-display font-extrabold leading-none" style={{ color:fg }}>{value}</div>
+<div className="eyebrow mt-1 truncate">{label}</div>
+{sub && <div className="text-xs mt-0.5" style={{ color:'var(--muted)' }}>{sub}</div>}
+</div>
+</div>
+);
 }
 function EmptyState({ icon, title, body }){
-  return (
-    <div className="card p-8 flex flex-col items-center text-center gap-2" style={{ color:'var(--muted)' }}>
-      <div className="rounded-full p-3" style={{ background:'var(--surface-2)' }}><Icon name={icon} size={22}/></div>
-      <div className="font-display font-bold" style={{ color:'var(--fg)' }}>{title}</div>
-      <div className="text-sm max-w-xs">{body}</div>
-    </div>
-  );
+return (
+<div className="card p-8 flex flex-col items-center text-center gap-2" style={{ color:'var(--muted)' }}>
+<div className="rounded-full p-3" style={{ background:'var(--surface-2)' }}><Icon name={icon} size={22}/></div>
+<div className="font-display font-bold" style={{ color:'var(--fg)' }}>{title}</div>
+<div className="text-sm max-w-xs">{body}</div>
+</div>
+);
 }
 function PhotoField({ label }){
-  return (
-    <div>
-      <div className="text-xs font-semibold mb-1.5" style={{ color:'var(--muted)' }}>{label}</div>
-      <div className="btn btn-outline opacity-70" style={{ cursor:'not-allowed' }}>
-        <Icon name="camera" size={15}/> Photo — stockage à venir
-      </div>
-    </div>
-  );
+return (
+<div>
+<div className="text-xs font-semibold mb-1.5" style={{ color:'var(--muted)' }}>{label}</div>
+<div className="btn btn-outline opacity-70" style={{ cursor:'not-allowed' }}>
+<Icon name="camera" size={15}/> Photo — stockage à venir
+</div>
+</div>
+);
 }
 
 /* ═══════════════════════ Journal (messaging) ═══════════════════════ */
 function useJournal(db){ return useCollection(db, 'journal'); }
 
 function JournalPanel({ db, journal, roleLabel }){
-  const [msg, setMsg] = useState('');
-  const entries = useMemo(() => [...journal.docs].sort((a,b)=> (b.creeLe||0)-(a.creeLe||0)).slice(0,40), [journal.docs]);
-  const send = () => {
-    if (!msg.trim() || !db) return;
-    db.collection('journal').add({ auteur: roleLabel, message: msg.trim(), creeLe: Date.now() });
-    setMsg('');
-  };
-  return (
-    <div className="flex flex-col gap-3 h-full">
-      <div className="flex items-center justify-between">
-        <h3 className="font-display font-bold text-sm flex items-center gap-2"><Icon name="message" size={16}/> Journal</h3>
-        <span className="eyebrow">{entries.length} entrées</span>
-      </div>
-      <div className="flex-1 overflow-y-auto" style={{ maxHeight:260 }}>
-        {entries.length === 0 && <div className="text-xs" style={{ color:'var(--muted)' }}>Aucune activité pour l'instant.</div>}
-        {entries.map(e => (
-          <div key={e.id} className="journal-entry">
-            <span className="journal-time">{fmtTime(e.creeLe)}</span>
-            <div className="text-xs"><b>{e.auteur}</b> — {e.message}</div>
-          </div>
-        ))}
-      </div>
-      <div className="flex gap-2">
-        <input className="input" placeholder="Écrire un message…" value={msg}
-          onChange={e=>setMsg(e.target.value)} onKeyDown={e=>{ if(e.key==='Enter') send(); }}/>
-        <button className="btn btn-accent" onClick={send} disabled={!msg.trim()}><Icon name="check" size={15}/></button>
-      </div>
-    </div>
-  );
+const [msg, setMsg] = useState('');
+const entries = useMemo(() => [...journal.docs].sort((a,b)=> (b.creeLe||0)-(a.creeLe||0)).slice(0,40), [journal.docs]);
+const send = () => {
+if (!msg.trim() || !db) return;
+db.collection('journal').add({ auteur: roleLabel, message: msg.trim(), creeLe: Date.now() });
+setMsg('');
+};
+return (
+<div className="flex flex-col gap-3 h-full">
+<div className="flex items-center justify-between">
+<h3 className="font-display font-bold text-sm flex items-center gap-2"><Icon name="message" size={16}/> Journal</h3>
+<span className="eyebrow">{entries.length} entrées</span>
+</div>
+<div className="flex-1 overflow-y-auto" style={{ maxHeight:260 }}>
+{entries.length === 0 && <div className="text-xs" style={{ color:'var(--muted)' }}>Aucune activité pour l'instant.</div>}
+{entries.map(e => (
+<div key={e.id} className="journal-entry">
+<span className="journal-time">{fmtTime(e.creeLe)}</span>
+<div className="text-xs"><b>{e.auteur}</b> — {e.message}</div>
+</div>
+))}
+</div>
+<div className="flex gap-2">
+<input className="input" placeholder="Écrire un message…" value={msg}
+onChange={e=>setMsg(e.target.value)} onKeyDown={e=>{ if(e.key==='Enter') send(); }}/>
+<button className="btn btn-accent" onClick={send} disabled={!msg.trim()}><Icon name="check" size={15}/></button>
+</div>
+</div>
+);
 }
 
 /* ═══════════════════════ TERRAIN (chauffeur) — phone frame, 9-step flow ═══════════════════════ */
 const DRIVER_STEPS = [
-  { key:'connexion',  n:'01', label:'Connexion' },
-  { key:'vehicule',   n:'02', label:'Contrôle véhicule' },
-  { key:'securite',   n:'03', label:'Sécurité, EPI & consignes' },
-  { key:'chargement', n:'04', label:'Chargement quai' },
-  { key:'navigation', n:'05', label:'Navigation & carte' },
-  { key:'depose',     n:'06', label:'Dépose · mode Tunnel' },
-  { key:'reprise',    n:'07', label:'Reprise retours & photos' },
-  { key:'rangement',  n:'08', label:'Rangement & clôture' },
-  { key:'fin',        n:'09', label:'Fin de service' },
+{ key:'connexion', n:'01', label:'Connexion' },
+{ key:'vehicule', n:'02', label:'Contrôle véhicule' },
+{ key:'securite', n:'03', label:'Sécurité, EPI & consignes' },
+{ key:'chargement', n:'04', label:'Chargement quai' },
+{ key:'navigation', n:'05', label:'Navigation & carte' },
+{ key:'depose', n:'06', label:'Dépose · mode Tunnel' },
+{ key:'reprise', n:'07', label:'Reprise retours & photos' },
+{ key:'rangement', n:'08', label:'Rangement & clôture' },
+{ key:'fin', n:'09', label:'Fin de service' },
 ];
 
 
 function ChauffeurLogin({ chauffeurs, onLogin }){
-  const [matricule, setMatricule] = useState('');
-  const [pin, setPin] = useState('');
-  const match = chauffeurs.find(c => (c.matricule||'').toLowerCase() === matricule.toLowerCase());
-  return (
-    <div className="flex flex-col gap-6 pt-6">
-      <div className="flex flex-col items-center gap-2 text-center">
-        <div className="rounded-2xl p-3" style={{ background:'var(--accent)' }}><Icon name="cross" size={26} className="text-white" style={{color:'#fff'}}/></div>
-        <div className="font-display font-extrabold text-xl">PharmaLogistics IA</div>
-        <div className="text-xs" style={{ color:'var(--muted)' }}>Distribution pharmaceutique</div>
-      </div>
-      <div className="flex flex-col gap-3">
-        <div>
-          <div className="eyebrow mb-1.5">Matricule chauffeur</div>
-          <input className="input font-mono text-center text-lg tracking-widest" placeholder="MD-1701" value={matricule}
-            onChange={e=>setMatricule(e.target.value.toUpperCase())}/>
-        </div>
-        <div>
-          <div className="eyebrow mb-1.5">Code PIN</div>
-          <input className="input text-center text-lg tracking-[.5em]" maxLength={4} inputMode="numeric" value={pin}
-            onChange={e=>setPin(e.target.value.replace(/\D/g,'').slice(0,4))}/>
-          <div className="flex items-center justify-center gap-2 mt-2">
-            {[0,1,2,3].map(i => <span key={i} className="pin-dot" data-filled={i < pin.length}/>)}
-          </div>
-        </div>
-      </div>
-      <button className="btn btn-accent justify-center py-3 text-base" disabled={!match || pin.length<4}
-        onClick={() => onLogin(match.id)}>
-        <Icon name="power" size={17}/> Prendre mon service
-      </button>
-      <div className="text-xs text-center" style={{ color:'var(--muted)' }}>
-        {match ? (match.vehiculeLabel ? `Véhicule assigné : ${match.vehiculeLabel}` : 'Aucun véhicule assigné pour le moment') : chauffeurs.length ? 'Saisis ton matricule (ex. ' + chauffeurs[0].matricule + ')' : 'Aucun chauffeur enregistré — passe par Admin'}
-      </div>
-    </div>
-  );
+const [matricule, setMatricule] = useState('');
+const [pin, setPin] = useState('');
+const match = chauffeurs.find(c => (c.matricule||'').toLowerCase() === matricule.toLowerCase());
+return (
+<div className="flex flex-col gap-6 pt-6">
+<div className="flex flex-col items-center gap-2 text-center">
+<div className="rounded-2xl p-3" style={{ background:'var(--accent)' }}><Icon name="cross" size={26} className="text-white" style={{color:'#fff'}}/></div>
+<div className="font-display font-extrabold text-xl">PharmaLogistics IA</div>
+<div className="text-xs" style={{ color:'var(--muted)' }}>Distribution pharmaceutique</div>
+</div>
+<div className="flex flex-col gap-3">
+<div>
+<div className="eyebrow mb-1.5">Matricule chauffeur</div>
+<input className="input font-mono text-center text-lg tracking-widest" placeholder="MD-1701" value={matricule}
+onChange={e=>setMatricule(e.target.value.toUpperCase())}/>
+</div>
+<div>
+<div className="eyebrow mb-1.5">Code PIN</div>
+<input className="input text-center text-lg tracking-[.5em]" maxLength={4} inputMode="numeric" value={pin}
+onChange={e=>setPin(e.target.value.replace(/\D/g,'').slice(0,4))}/>
+<div className="flex items-center justify-center gap-2 mt-2">
+{[0,1,2,3].map(i => <span key={i} className="pin-dot" data-filled={i < pin.length}/>)}
+</div>
+</div>
+</div>
+<button className="btn btn-accent justify-center py-3 text-base" disabled={!match || pin.length<4}
+onClick={() => onLogin(match.id)}>
+<Icon name="power" size={17}/> Prendre mon service
+</button>
+<div className="text-xs text-center" style={{ color:'var(--muted)' }}>
+{match ? (match.vehiculeLabel ? `Véhicule assigné : ${match.vehiculeLabel}` : 'Aucun véhicule assigné pour le moment') : chauffeurs.length ? 'Saisis ton matricule (ex. ' + chauffeurs[0].matricule + ')' : 'Aucun chauffeur enregistré — passe par Admin'}
+</div>
+</div>
+);
 }
 
 function VehicleChecklist({ items, checked, onToggle, disabled }){
-  return (
-    <div className="flex flex-col gap-2">
-      {items.map(it => (
-        <label key={it} className="flex items-center gap-3 card p-3" style={{ opacity: disabled?0.6:1, cursor: disabled?'default':'pointer' }}>
-          <input type="checkbox" checked={!!checked[it]} disabled={disabled} onChange={() => onToggle(it)} className="w-4 h-4"/>
-          <span className="text-sm">{it}</span>
-        </label>
-      ))}
-    </div>
-  );
+return (
+<div className="flex flex-col gap-2">
+{items.map(it => (
+<label key={it} className="flex items-center gap-3 card p-3" style={{ opacity: disabled?0.6:1, cursor: disabled?'default':'pointer' }}>
+<input type="checkbox" checked={!!checked[it]} disabled={disabled} onChange={() => onToggle(it)} className="w-4 h-4"/>
+<span className="text-sm">{it}</span>
+</label>
+))}
+</div>
+);
 }
 
 function TerrainView({ db, chauffeurs, tournees, pharmacies, journal }){
-  const [chauffeurId, setChauffeurId] = useState(null);
-  const [stepKey, setStepKey] = useState('connexion');
-  const [vehChecks, setVehChecks] = useState({});
-  const [secChecks, setSecChecks] = useState({});
-  const [bacsCount, setBacsCount] = useState('');
-  const [problemStop, setProblemStop] = useState(null);
-  const [problemText, setProblemText] = useState('');
+const [chauffeurId, setChauffeurId] = useState(null);
+const [stepKey, setStepKey] = useState('connexion');
+const [vehChecks, setVehChecks] = useState({});
+const [secChecks, setSecChecks] = useState({});
+const [bacsCount, setBacsCount] = useState('');
+const [problemStop, setProblemStop] = useState(null);
+const [problemText, setProblemText] = useState('');
 
-  const chauffeur = chauffeurs.docs.find(c => c.id === chauffeurId) || null;
-  const tournee = useMemo(() => {
-    if (!chauffeurId) return null;
-    const mine = tournees.docs.filter(t => t.chauffeurId === chauffeurId);
-    return mine.find(t => t.statut !== 'terminee') || mine[0] || null;
-  }, [tournees.docs, chauffeurId]);
-  const pharmaById = useMemo(() => { const m={}; pharmacies.docs.forEach(p=>m[p.id]=p); return m; }, [pharmacies.docs]);
+const chauffeur = chauffeurs.docs.find(c => c.id === chauffeurId) || null;
+const tournee = useMemo(() => {
+if (!chauffeurId) return null;
+const mine = tournees.docs.filter(t => t.chauffeurId === chauffeurId);
+// Ne jamais reprendre une tournée déjà clôturée : si le chauffeur n'a aucune
+// tournée active, on affiche "Aucune tournée assignée" plutôt que l'ancienne
+// tournée terminée (sinon le flux semblait "sauter" directement à la fin).
+return mine.find(t => t.statut !== 'terminee') || null;
+}, [tournees.docs, chauffeurId]);
+const pharmaById = useMemo(() => { const m={}; pharmacies.docs.forEach(p=>m[p.id]=p); return m; }, [pharmacies.docs]);
 
-  const patchTournee = useCallback((patch) => { if (db && tournee) db.doc('tournees/'+tournee.id).update(patch); }, [db, tournee]);
-  const patchStop = useCallback((stopId, patch) => {
-    if (!tournee) return;
-    patchTournee({ stops: (tournee.stops||[]).map(s => s.id===stopId ? {...s,...patch} : s) });
-  }, [tournee, patchTournee]);
-  const logJournal = useCallback((message) => {
-    if (!db) return;
-    db.collection('journal').add({ auteur: chauffeur ? ('Chauffeur ' + (chauffeur.nom||chauffeur.matricule)) : 'Terrain', message, creeLe: Date.now() });
-  }, [db, chauffeur]);
+const patchTournee = useCallback((patch) => { if (db && tournee) db.doc('tournees/'+tournee.id).update(patch); }, [db, tournee]);
+const patchStop = useCallback((stopId, patch) => {
+if (!tournee) return;
+patchTournee({ stops: (tournee.stops||[]).map(s => s.id===stopId ? {...s,...patch} : s) });
+}, [tournee, patchTournee]);
+const logJournal = useCallback((message) => {
+if (!db) return;
+db.collection('journal').add({ auteur: chauffeur ? ('Chauffeur ' + (chauffeur.nom||chauffeur.matricule)) : 'Terrain', message, creeLe: Date.now() });
+}, [db, chauffeur]);
 
-  const vehItems = ['Pression des pneus vérifiée','Niveaux (huile, lave-glace) contrôlés','Propreté caisse réfrigérée','Sondes de température chargées et actives'];
-  const secItems = ['Gants et EPI portés','Consignes chaîne du froid relues','Trousse de sécurité présente à bord'];
-  const allVeh = vehItems.every(i => vehChecks[i]);
-  const allSec = secItems.every(i => secChecks[i]);
-  const stops = tournee ? (tournee.stops||[]) : [];
-  const delivered = stops.filter(s=>s.statut==='livre').length;
-  const currentStop = stops.find(s => s.statut!=='livre');
+const vehItems = ['Pression des pneus vérifiée','Niveaux (huile, lave-glace) contrôlés','Propreté caisse réfrigérée','Sondes de température chargées et actives'];
+const secItems = ['Gants et EPI portés','Consignes chaîne du froid relues','Trousse de sécurité présente à bord'];
+const allVeh = vehItems.every(i => vehChecks[i]);
+const allSec = secItems.every(i => secChecks[i]);
+const stops = tournee ? (tournee.stops||[]) : [];
+const delivered = stops.filter(s=>s.statut==='livre').length;
+const currentStop = stops.find(s => s.statut!=='livre');
 
-  const goto = (k) => setStepKey(k);
+const goto = (k) => setStepKey(k);
 
-  const screen = () => {
-    if (!chauffeurId) {
-      return <ChauffeurLogin chauffeurs={chauffeurs.docs} onLogin={(id)=>{ setChauffeurId(id); setStepKey('vehicule'); }}/>;
-    }
-    if (!tournee) {
-      return (
-        <div className="flex flex-col gap-4 pt-4">
-          <EmptyState icon="package" title="Aucune tournée assignée" body="Le régulateur n'a pas encore créé de tournée pour toi aujourd'hui."/>
-          <button className="btn btn-outline justify-center" onClick={()=>setChauffeurId(null)}><Icon name="arrow-left" size={15}/> Changer de chauffeur</button>
-        </div>
-      );
-    }
+const screen = () => {
+if (!chauffeurId) {
+return <ChauffeurLogin chauffeurs={chauffeurs.docs} onLogin={(id)=>{ setChauffeurId(id); setStepKey('vehicule'); }}/>;
+}
+if (!tournee && stepKey !== 'fin') {
+// stepKey 'fin' est exclu : juste après la clôture, la tournée vient de
+// passer à "terminee" et disparaît donc de la recherche de tournée active —
+// on doit quand même laisser le chauffeur voir son écran de fin de service.
+return (
+<div className="flex flex-col gap-4 pt-4">
+<EmptyState icon="package" title="Aucune tournée assignée" body="Le régulateur n'a pas encore créé de tournée pour toi aujourd'hui."/>
+<button className="btn btn-outline justify-center" onClick={()=>setChauffeurId(null)}><Icon name="arrow-left" size={15}/> Changer de chauffeur</button>
+</div>
+);
+}
 
-    switch(stepKey){
-      case 'vehicule': return (
-        <StepScreen n="02" title="Contrôle véhicule" next="securite" onNext={goto} canNext={allVeh}>
-          <VehicleChecklist items={vehItems} checked={vehChecks} onToggle={k=>setVehChecks(s=>({...s,[k]:!s[k]}))}/>
-        </StepScreen>
-      );
-      case 'securite': return (
-        <StepScreen n="03" title="Sécurité, EPI & consignes" next="chargement" onNext={goto} canNext={allSec}>
-          <VehicleChecklist items={secItems} checked={secChecks} onToggle={k=>setSecChecks(s=>({...s,[k]:!s[k]}))}/>
-        </StepScreen>
-      );
-      case 'chargement': return (
-        <StepScreen n="04" title="Chargement quai" next="navigation" onNext={()=>{
-          patchTournee({ etapeActuelle:'en_route', controles:{vehicule:true,securite:true,chargement:true}, heureDepart:Date.now() });
-          logJournal('Chargement terminé, départ en tournée ' + (tournee.numero||tournee.id) + '.');
-          goto('navigation');
-        }} canNext={true} nextLabel="Démarrer la tournée">
-          <p className="text-sm" style={{ color:'var(--muted)' }}>{stops.length} arrêt(s) chargé(s) pour cette tournée.</p>
-          <div className="card p-3 mt-3 flex items-center gap-2 text-sm"><Icon name="box" size={16} className="shrink-0"/> Vérifie les bacs réfrigérés avant départ.</div>
-        </StepScreen>
-      );
-      case 'navigation': {
-        if (!currentStop) { setTimeout(()=>goto('rangement'),0); return null; }
-        const ph = pharmaById[currentStop.pharmacieId] || {};
-        const addr = [ph.adresse, ph.ville].filter(Boolean).join(', ');
-        return (
-          <div className="flex flex-col gap-4 pt-4">
-            <div className="eyebrow">05 · Navigation & carte</div>
-            <div className="card p-4">
-              <div className="font-display font-bold">{ph.nom || 'Pharmacie'}</div>
-              <div className="text-xs flex items-center gap-1 mt-1" style={{ color:'var(--muted)' }}><Icon name="pin" size={12}/>{addr || 'Adresse non renseignée'}</div>
-              <div className="text-xs mt-1" style={{ color:'var(--muted)' }}>Arrêt {stops.indexOf(currentStop)+1} / {stops.length}</div>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <a className="btn btn-accent justify-center" href={wazeLink(addr)} target="_blank" rel="noopener"><Icon name="nav" size={15}/> Waze</a>
-              <a className="btn btn-outline justify-center" href={mapsLink(addr)} target="_blank" rel="noopener"><Icon name="map" size={15}/> Maps</a>
-            </div>
-            <button className="btn btn-soft justify-center" onClick={()=>{ patchStop(currentStop.id,{statut:'en_route',heureDepartVersStop:Date.now()}); goto('depose'); }}>
-              <Icon name="truck" size={15}/> Je prends la route
-            </button>
-          </div>
-        );
-      }
-      case 'depose': {
-        if (!currentStop) { setTimeout(()=>goto('rangement'),0); return null; }
-        const ph = pharmaById[currentStop.pharmacieId] || {};
-        return (
-          <div className="flex flex-col gap-4 pt-4">
-            <div className="eyebrow">06 · Dépose — mode Tunnel</div>
-            <div className="card p-4 flex items-center justify-between">
-              <div>
-                <div className="font-display font-bold">{ph.nom || 'Pharmacie'}</div>
-                <StatusChip statut={currentStop.statut}/>
-              </div>
-              <Icon name="package" size={26}/>
-            </div>
-            {currentStop.statut === 'en_route' && (
-              <button className="btn btn-soft justify-center" onClick={()=>patchStop(currentStop.id,{statut:'arrive',heureArrivee:Date.now()})}>
-                <Icon name="pin" size={15}/> Je suis arrivé
-              </button>
-            )}
-            {currentStop.statut === 'arrive' && (
-              <>
-                <PhotoField label="Photo du colis livré"/>
-                <button className="btn btn-accent justify-center py-3" onClick={()=>{
-                  patchStop(currentStop.id,{statut:'livre',heureLivraison:Date.now()});
-                  logJournal('Livraison effectuée — ' + (ph.nom||'pharmacie') + '.');
-                }}>
-                  <Icon name="check" size={17}/> Confirmer la livraison
-                </button>
-                <button className="btn btn-danger justify-center" onClick={()=>setProblemStop(currentStop)}>
-                  <Icon name="alert" size={15}/> Signaler un problème
-                </button>
-              </>
-            )}
-            <div className="h-2 rounded-full surface2 overflow-hidden"><div className="h-full" style={{ width:(stops.length?(delivered/stops.length*100):0)+'%', background:'var(--success)' }}/></div>
-            <div className="text-xs text-center" style={{ color:'var(--muted)' }}>{delivered} / {stops.length} livraisons effectuées</div>
-          </div>
-        );
-      }
-      case 'rangement': return (
-        <StepScreen n="08" title="Rangement & clôture" next="fin" onNext={()=>{
-          patchTournee({ statut:'terminee', etapeActuelle:'terminee', clotureDepot:{fait:true,heure:Date.now(),bacsVidesConfirmes:Number(bacsCount)||0} });
-          logJournal('Clôture du dépôt — tournée ' + (tournee.numero||tournee.id) + ' terminée.');
-          goto('fin');
-        }} canNext={true} nextLabel="Clôturer la tournée">
-          <div className="text-sm mb-3">{delivered} / {stops.length} livraisons effectuées</div>
-          <div className="eyebrow mb-1.5">Bacs vides rapportés</div>
-          <input className="input" inputMode="numeric" placeholder="0" value={bacsCount} onChange={e=>setBacsCount(e.target.value.replace(/\D/g,''))}/>
-        </StepScreen>
-      );
-      case 'fin': return (
-        <div className="flex flex-col gap-4 pt-10 items-center text-center">
-          <div className="rounded-full p-4" style={{ background:'var(--success-soft)', color:'var(--success)' }}><Icon name="check" size={28}/></div>
-          <div className="font-display font-extrabold text-lg">09 · Fin de service</div>
-          <div className="text-sm" style={{ color:'var(--muted)' }}>Tournée clôturée. Merci {chauffeur ? (chauffeur.nom||chauffeur.matricule) : ''} !</div>
-          <button className="btn btn-outline" onClick={()=>{ setChauffeurId(null); setStepKey('connexion'); setVehChecks({}); setSecChecks({}); setBacsCount(''); }}>
-            <Icon name="arrow-left" size={15}/> Nouvelle session
-          </button>
-        </div>
-      );
-      default: return null;
-    }
-  };
+switch(stepKey){
+case 'vehicule': return (
+<StepScreen n="02" title="Contrôle véhicule" next="securite" onNext={goto} canNext={allVeh}>
+<VehicleChecklist items={vehItems} checked={vehChecks} onToggle={k=>setVehChecks(s=>({...s,[k]:!s[k]}))}/>
+</StepScreen>
+);
+case 'securite': return (
+<StepScreen n="03" title="Sécurité, EPI & consignes" next="chargement" onNext={goto} canNext={allSec}>
+<VehicleChecklist items={secItems} checked={secChecks} onToggle={k=>setSecChecks(s=>({...s,[k]:!s[k]}))}/>
+</StepScreen>
+);
+case 'chargement': return (
+<StepScreen n="04" title="Chargement quai" next="navigation" onNext={()=>{
+patchTournee({ etapeActuelle:'en_route', controles:{vehicule:true,securite:true,chargement:true}, heureDepart:Date.now() });
+logJournal('Chargement terminé, départ en tournée ' + (tournee.numero||tournee.id) + '.');
+goto('navigation');
+}} canNext={true} nextLabel="Démarrer la tournée">
+<p className="text-sm" style={{ color:'var(--muted)' }}>{stops.length} arrêt(s) chargé(s) pour cette tournée.</p>
+<div className="card p-3 mt-3 flex items-center gap-2 text-sm"><Icon name="box" size={16} className="shrink-0"/> Vérifie les bacs réfrigérés avant départ.</div>
+</StepScreen>
+);
+case 'navigation': {
+if (!currentStop) { setTimeout(()=>goto('rangement'),0); return null; }
+const ph = pharmaById[currentStop.pharmacieId] || {};
+const addr = [ph.adresse, ph.ville].filter(Boolean).join(', ');
+return (
+<div className="flex flex-col gap-4 pt-4">
+<div className="eyebrow">05 · Navigation & carte</div>
+<div className="card p-4">
+<div className="font-display font-bold">{ph.nom || 'Pharmacie'}</div>
+<div className="text-xs flex items-center gap-1 mt-1" style={{ color:'var(--muted)' }}><Icon name="pin" size={12}/>{addr || 'Adresse non renseignée'}</div>
+<div className="text-xs mt-1" style={{ color:'var(--muted)' }}>Arrêt {stops.indexOf(currentStop)+1} / {stops.length}</div>
+</div>
+<div className="grid grid-cols-2 gap-2">
+<a className="btn btn-accent justify-center" href={wazeLink(addr)} target="_blank" rel="noopener"><Icon name="nav" size={15}/> Waze</a>
+<a className="btn btn-outline justify-center" href={mapsLink(addr)} target="_blank" rel="noopener"><Icon name="map" size={15}/> Maps</a>
+</div>
+<button className="btn btn-soft justify-center" onClick={()=>{ patchStop(currentStop.id,{statut:'en_route',heureDepartVersStop:Date.now()}); goto('depose'); }}>
+<Icon name="truck" size={15}/> Je prends la route
+</button>
+</div>
+);
+}
+case 'depose': {
+if (!currentStop) { setTimeout(()=>goto('rangement'),0); return null; }
+const ph = pharmaById[currentStop.pharmacieId] || {};
+return (
+<div className="flex flex-col gap-4 pt-4">
+<div className="eyebrow">06 · Dépose — mode Tunnel</div>
+<div className="card p-4 flex items-center justify-between">
+<div>
+<div className="font-display font-bold">{ph.nom || 'Pharmacie'}</div>
+<StatusChip statut={currentStop.statut}/>
+</div>
+<Icon name="package" size={26}/>
+</div>
+{currentStop.statut === 'en_route' && (
+<button className="btn btn-soft justify-center" onClick={()=>patchStop(currentStop.id,{statut:'arrive',heureArrivee:Date.now()})}>
+<Icon name="pin" size={15}/> Je suis arrivé
+</button>
+)}
+{currentStop.statut === 'arrive' && (
+<>
+<PhotoField label="Photo du colis livré"/>
+<button className="btn btn-accent justify-center py-3" onClick={()=>{
+patchStop(currentStop.id,{statut:'livre',heureLivraison:Date.now()});
+logJournal('Livraison effectuée — ' + (ph.nom||'pharmacie') + '.');
+}}>
+<Icon name="check" size={17}/> Confirmer la livraison
+</button>
+<button className="btn btn-danger justify-center" onClick={()=>setProblemStop(currentStop)}>
+<Icon name="alert" size={15}/> Signaler un problème
+</button>
+</>
+)}
+<div className="h-2 rounded-full surface2 overflow-hidden"><div className="h-full" style={{ width:(stops.length?(delivered/stops.length*100):0)+'%', background:'var(--success)' }}/></div>
+<div className="text-xs text-center" style={{ color:'var(--muted)' }}>{delivered} / {stops.length} livraisons effectuées</div>
+</div>
+);
+}
+case 'rangement': return (
+<StepScreen n="08" title="Rangement & clôture" next="fin" onNext={()=>{
+patchTournee({ statut:'terminee', etapeActuelle:'terminee', clotureDepot:{fait:true,heure:Date.now(),bacsVidesConfirmes:Number(bacsCount)||0} });
+logJournal('Clôture du dépôt — tournée ' + (tournee.numero||tournee.id) + ' terminée.');
+goto('fin');
+}} canNext={true} nextLabel="Clôturer la tournée">
+<div className="text-sm mb-3">{delivered} / {stops.length} livraisons effectuées</div>
+<div className="eyebrow mb-1.5">Bacs vides rapportés</div>
+<input className="input" inputMode="numeric" placeholder="0" value={bacsCount} onChange={e=>setBacsCount(e.target.value.replace(/\D/g,''))}/>
+</StepScreen>
+);
+case 'fin': return (
+<div className="flex flex-col gap-4 pt-10 items-center text-center">
+<div className="rounded-full p-4" style={{ background:'var(--success-soft)', color:'var(--success)' }}><Icon name="check" size={28}/></div>
+<div className="font-display font-extrabold text-lg">09 · Fin de service</div>
+<div className="text-sm" style={{ color:'var(--muted)' }}>Tournée clôturée. Merci {chauffeur ? (chauffeur.nom||chauffeur.matricule) : ''} !</div>
+<button className="btn btn-outline" onClick={()=>{ setChauffeurId(null); setStepKey('connexion'); setVehChecks({}); setSecChecks({}); setBacsCount(''); }}>
+<Icon name="arrow-left" size={15}/> Nouvelle session
+</button>
+</div>
+);
+default: return null;
+}
+};
 
-  return (
-    <>
-      <div className="mobile-view">{screen()}</div>
-      {problemStop && (
-        <Modal onClose={()=>setProblemStop(null)} title="Signaler un problème">
-          <textarea className="input" rows={4} placeholder="Décris le problème rencontré…" value={problemText} onChange={e=>setProblemText(e.target.value)}/>
-          <button className="btn btn-danger justify-center mt-3 w-full" disabled={!problemText.trim()} onClick={()=>{
-            if (db) db.collection('depannages').add({ pharmacieId: problemStop.pharmacieId, tourneeId: tournee.id, stopId: problemStop.id, description: problemText.trim(), statut:'nouveau', creeLe: Date.now() });
-            patchStop(problemStop.id, { statut:'probleme' });
-            logJournal('Problème signalé sur un arrêt — dépannage OCP créé.');
-            setProblemStop(null); setProblemText('');
-          }}>Envoyer à l'exploitation</button>
-        </Modal>
-      )}
-    </>
-  );
+return (
+<>
+<div className="mobile-view">{screen()}</div>
+{problemStop && (
+<Modal onClose={()=>setProblemStop(null)} title="Signaler un problème">
+<textarea className="input" rows={4} placeholder="Décris le problème rencontré…" value={problemText} onChange={e=>setProblemText(e.target.value)}/>
+<button className="btn btn-danger justify-center mt-3 w-full" disabled={!problemText.trim()} onClick={()=>{
+if (db) db.collection('depannages').add({ pharmacieId: problemStop.pharmacieId, tourneeId: tournee.id, stopId: problemStop.id, description: problemText.trim(), statut:'nouveau', creeLe: Date.now() });
+patchStop(problemStop.id, { statut:'probleme' });
+logJournal('Problème signalé sur un arrêt — dépannage OCP créé.');
+setProblemStop(null); setProblemText('');
+}}>Envoyer à l'exploitation</button>
+</Modal>
+)}
+</>
+);
 }
 
 function StepScreen({ n, title, children, next, onNext, canNext, nextLabel }){
-  return (
-    <div className="flex flex-col gap-4 pt-4">
-      <div className="eyebrow">{n} · {title}</div>
-      {children}
-      <button className="btn btn-accent justify-center py-3" disabled={!canNext} onClick={() => onNext(next)}>
-        <Icon name="check" size={17}/> {nextLabel || 'Continuer'}
-      </button>
-    </div>
-  );
+return (
+<div className="flex flex-col gap-4 pt-4">
+<div className="eyebrow">{n} · {title}</div>
+{children}
+<button className="btn btn-accent justify-center py-3" disabled={!canNext} onClick={() => onNext(next)}>
+<Icon name="check" size={17}/> {nextLabel || 'Continuer'}
+</button>
+</div>
+);
 }
 
 function Modal({ title, children, onClose }){
-  return (
-    <div className="fixed inset-0 flex items-end sm:items-center justify-center p-4 z-50" style={{ background:'rgba(10,20,15,.45)' }} onClick={onClose}>
-      <div className="card p-5 w-full max-w-sm" onClick={e=>e.stopPropagation()}>
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-display font-bold">{title}</h3>
-          <button onClick={onClose} className="opacity-60"><Icon name="x" size={18}/></button>
-        </div>
-        {children}
-      </div>
-    </div>
-  );
+return (
+<div className="fixed inset-0 flex items-end sm:items-center justify-center p-4 z-50" style={{ background:'rgba(10,20,15,.45)' }} onClick={onClose}>
+<div className="card p-5 w-full max-w-sm" onClick={e=>e.stopPropagation()}>
+<div className="flex items-center justify-between mb-3">
+<h3 className="font-display font-bold">{title}</h3>
+<button onClick={onClose} className="opacity-60"><Icon name="x" size={18}/></button>
+</div>
+{children}
+</div>
+</div>
+);
 }
 
 /* ═══════════════════════ EXPLOITATION (régulateur) — browser chrome + sidebar ═══════════════════════ */
 const EXP_SECTIONS = [
-  { key:'flotte', label:'Flotte & carte', icon:'map' },
-  { key:'depannages', label:'Dépannages OCP', icon:'wrench' },
-  { key:'planning', label:'Planning chauffeurs', icon:'calendar' },
-  { key:'vehicules', label:'Véhicules & entretien', icon:'truck' },
-  { key:'retours', label:'Retours & contenants', icon:'box' },
+{ key:'flotte', label:'Flotte & carte', icon:'map' },
+{ key:'depannages', label:'Dépannages OCP', icon:'wrench' },
+{ key:'planning', label:'Planning chauffeurs', icon:'calendar' },
+{ key:'vehicules', label:'Véhicules & entretien', icon:'truck' },
+{ key:'retours', label:'Retours & contenants', icon:'box' },
 ];
 
 function NewTourneeModal({ db, chauffeurs, pharmacies, onClose }){
-  const [chauffeurId, setChauffeurId] = useState(chauffeurs[0]?.id || '');
-  const [numero, setNumero] = useState('');
-  const [zone, setZone] = useState('');
-  const [selected, setSelected] = useState([]);
-  const toggle = (id) => setSelected(s => s.includes(id) ? s.filter(x=>x!==id) : [...s, id]);
-  const create = () => {
-    if (!db || !chauffeurId || !selected.length) return;
-    db.collection('tournees').add({
-      chauffeurId, numero: numero || ('T-'+Date.now().toString().slice(-4)), zone,
-      statut:'planifiee', etapeActuelle:'avant_depart', creeLe: Date.now(),
-      stops: selected.map((pid,i) => ({ id:'s'+i+'-'+Date.now(), pharmacieId:pid, statut:'a_venir' })),
-    });
-    onClose();
-  };
-  return (
-    <Modal title="Nouvelle tournée" onClose={onClose}>
-      <div className="flex flex-col gap-3">
-        <div>
-          <div className="eyebrow mb-1">Chauffeur</div>
-          <select className="input" value={chauffeurId} onChange={e=>setChauffeurId(e.target.value)}>
-            {chauffeurs.map(c => <option key={c.id} value={c.id}>{c.nom || c.matricule}</option>)}
-          </select>
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div><div className="eyebrow mb-1">Numéro</div><input className="input" value={numero} onChange={e=>setNumero(e.target.value)} placeholder="T-0142"/></div>
-          <div><div className="eyebrow mb-1">Zone</div><input className="input" value={zone} onChange={e=>setZone(e.target.value)} placeholder="Lyon Est"/></div>
-        </div>
-        <div>
-          <div className="eyebrow mb-1">Pharmacies à livrer</div>
-          <div className="flex flex-col gap-1.5 max-h-48 overflow-y-auto">
-            {pharmacies.map(p => (
-              <label key={p.id} className="flex items-center gap-2 text-sm card p-2">
-                <input type="checkbox" checked={selected.includes(p.id)} onChange={()=>toggle(p.id)}/> {p.nom}
-              </label>
-            ))}
-          </div>
-        </div>
-        <button className="btn btn-accent justify-center mt-1" disabled={!chauffeurId || !selected.length} onClick={create}>
-          <Icon name="plus" size={15}/> Créer la tournée
-        </button>
-      </div>
-    </Modal>
-  );
+const [chauffeurId, setChauffeurId] = useState(chauffeurs[0]?.id || '');
+const [numero, setNumero] = useState('');
+const [zone, setZone] = useState('');
+const [selected, setSelected] = useState([]);
+const toggle = (id) => setSelected(s => s.includes(id) ? s.filter(x=>x!==id) : [...s, id]);
+const create = () => {
+if (!db || !chauffeurId || !selected.length) return;
+db.collection('tournees').add({
+chauffeurId, numero: numero || ('T-'+Date.now().toString().slice(-4)), zone,
+statut:'planifiee', etapeActuelle:'avant_depart', creeLe: Date.now(),
+stops: selected.map((pid,i) => ({ id:'s'+i+'-'+Date.now(), pharmacieId:pid, statut:'a_venir' })),
+});
+onClose();
+};
+return (
+<Modal title="Nouvelle tournée" onClose={onClose}>
+<div className="flex flex-col gap-3">
+<div>
+<div className="eyebrow mb-1">Chauffeur</div>
+<select className="input" value={chauffeurId} onChange={e=>setChauffeurId(e.target.value)}>
+{chauffeurs.map(c => <option key={c.id} value={c.id}>{c.nom || c.matricule}</option>)}
+</select>
+</div>
+<div className="grid grid-cols-2 gap-3">
+<div><div className="eyebrow mb-1">Numéro</div><input className="input" value={numero} onChange={e=>setNumero(e.target.value)} placeholder="T-0142"/></div>
+<div><div className="eyebrow mb-1">Zone</div><input className="input" value={zone} onChange={e=>setZone(e.target.value)} placeholder="Lyon Est"/></div>
+</div>
+<div>
+<div className="eyebrow mb-1">Pharmacies à livrer</div>
+<div className="flex flex-col gap-1.5 max-h-48 overflow-y-auto">
+{pharmacies.map(p => (
+<label key={p.id} className="flex items-center gap-2 text-sm card p-2">
+<input type="checkbox" checked={selected.includes(p.id)} onChange={()=>toggle(p.id)}/> {p.nom}
+</label>
+))}
+</div>
+</div>
+<button className="btn btn-accent justify-center mt-1" disabled={!chauffeurId || !selected.length} onClick={create}>
+<Icon name="plus" size={15}/> Créer la tournée
+</button>
+</div>
+</Modal>
+);
 }
 
 function ExploitationView({ db, chauffeurs, tournees, pharmacies, depannages, journal }){
-  const [section, setSection] = useState('flotte');
-  const [showNew, setShowNew] = useState(false);
-  const [assignDep, setAssignDep] = useState(null);
-  const [selectedChauffeur, setSelectedChauffeur] = useState(null);
+const [section, setSection] = useState('flotte');
+const [showNew, setShowNew] = useState(false);
+const [assignDep, setAssignDep] = useState(null);
+const [selectedChauffeur, setSelectedChauffeur] = useState(null);
 
-  const activeTournees = tournees.docs.filter(t => t.statut !== 'terminee');
-  const lateTournees = activeTournees.filter(t => t.etapeActuelle==='en_route' && t.heureDepart && (Date.now()-t.heureDepart) > 4*3600*1000);
-  const allStops = tournees.docs.flatMap(t => t.stops||[]);
-  const deliveredStops = allStops.filter(s=>s.statut==='livre').length;
-  const vehiculesLibres = chauffeurs.docs.length; // simplified
-  const openDepannages = depannages.docs.filter(d=>d.statut!=='resolu');
-  const pharmaById = useMemo(()=>{ const m={}; pharmacies.docs.forEach(p=>m[p.id]=p); return m; }, [pharmacies.docs]);
-  const chauffeurById = useMemo(()=>{ const m={}; chauffeurs.docs.forEach(c=>m[c.id]=c); return m; }, [chauffeurs.docs]);
+const activeTournees = tournees.docs.filter(t => t.statut !== 'terminee');
+const lateTournees = activeTournees.filter(t => t.etapeActuelle==='en_route' && t.heureDepart && (Date.now()-t.heureDepart) > 4*3600*1000);
+const allStops = tournees.docs.flatMap(t => t.stops||[]);
+const deliveredStops = allStops.filter(s=>s.statut==='livre').length;
+const vehiculesLibres = chauffeurs.docs.length; // simplified
+const openDepannages = depannages.docs.filter(d=>d.statut!=='resolu');
+const pharmaById = useMemo(()=>{ const m={}; pharmacies.docs.forEach(p=>m[p.id]=p); return m; }, [pharmacies.docs]);
+const chauffeurById = useMemo(()=>{ const m={}; chauffeurs.docs.forEach(c=>m[c.id]=c); return m; }, [chauffeurs.docs]);
 
-  const current = chauffeurs.docs.find(c=>c.id===selectedChauffeur) || chauffeurs.docs[0];
-  const currentTournee = current ? tournees.docs.find(t=>t.chauffeurId===current.id && t.statut!=='terminee') : null;
+const current = chauffeurs.docs.find(c=>c.id===selectedChauffeur) || chauffeurs.docs[0];
+const currentTournee = current ? tournees.docs.find(t=>t.chauffeurId===current.id && t.statut!=='terminee') : null;
 
-  return (
-    <>
-      <div className="exp-grid">
-          <nav className="exp-nav">
-            {EXP_SECTIONS.map(s => (
-              <div key={s.key} className="exp-nav-item" data-active={section===s.key} onClick={()=>setSection(s.key)}>
-                <Icon name={s.icon} size={16}/> {s.label}
-                {s.key==='depannages' && openDepannages.length>0 && <span className="exp-nav-badge">{openDepannages.length}</span>}
-              </div>
-            ))}
-          </nav>
+return (
+<>
+<div className="exp-grid">
+<nav className="exp-nav">
+{EXP_SECTIONS.map(s => (
+<div key={s.key} className="exp-nav-item" data-active={section===s.key} onClick={()=>setSection(s.key)}>
+<Icon name={s.icon} size={16}/> {s.label}
+{s.key==='depannages' && openDepannages.length>0 && <span className="exp-nav-badge">{openDepannages.length}</span>}
+</div>
+))}
+</nav>
+<div className="exp-main">
+<div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+<h2 className="font-display font-extrabold text-lg">{EXP_SECTIONS.find(s=>s.key===section)?.label}</h2>
+{section==='flotte' && <button className="btn btn-accent" onClick={()=>setShowNew(true)}><Icon name="plus" size={15}/> Nouvelle tournée</button>}
+</div>
 
-          <div className="exp-main">
-            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-              <h2 className="font-display font-extrabold text-lg">{EXP_SECTIONS.find(s=>s.key===section)?.label}</h2>
-              {section==='flotte' && <button className="btn btn-accent" onClick={()=>setShowNew(true)}><Icon name="plus" size={15}/> Nouvelle tournée</button>}
-            </div>
+{section === 'flotte' && (
+<div className="flex flex-col gap-4">
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<Tile icon="truck" label="Tournées actives" value={activeTournees.length} sub={lateTournees.length?`${lateTournees.length} en retard`:'à l\'heure'} tone={lateTournees.length?'danger':undefined}/>
+<Tile icon="check" label="Arrêts livrés" value={deliveredStops} sub={`sur ${allStops.length} planifiés`}/>
+<Tile icon="package" label="Véhicules dispo" value={vehiculesLibres} sub="immobilisé(s): 0"/>
+</div>
+<div className="card p-4" style={{ minHeight:160 }}>
+<div className="eyebrow mb-2">Carte flotte</div>
+<div className="rounded-xl flex items-center justify-center" style={{ background:'var(--surface-2)', minHeight:140, color:'var(--muted)' }}>
+<div className="text-center text-xs"><Icon name="map" size={22} className="mx-auto mb-1"/> Carte en direct — ouvre Waze/Maps depuis chaque tournée</div>
+</div>
+</div>
+<div className="flex flex-col gap-2">
+{activeTournees.length===0 && <EmptyState icon="truck" title="Aucune tournée active" body="Crée une nouvelle tournée pour démarrer la journée."/>}
+{activeTournees.map(t => {
+const stops = t.stops||[];
+const delivered = stops.filter(s=>s.statut==='livre').length;
+const ch = chauffeurById[t.chauffeurId];
+return (
+<div key={t.id} className="card p-4 flex items-center justify-between gap-3 cursor-pointer" onClick={()=>setSelectedChauffeur(t.chauffeurId)}>
+<div className="min-w-0">
+<div className="font-semibold">Tournée {t.numero||t.id}</div>
+<div className="text-xs" style={{ color:'var(--muted)' }}>{ch ? (ch.nom||ch.matricule) : 'Chauffeur —'} · {t.zone||'zone —'} · {delivered}/{stops.length} livrés</div>
+</div>
+<StatusChip statut={t.etapeActuelle==='en_route'?'en_route':(t.statut==='terminee'?'livre':'a_venir')}/>
+</div>
+);
+})}
+</div>
+</div>
+)}
 
-            {section === 'flotte' && (
-              <div className="flex flex-col gap-4">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <Tile icon="truck" label="Tournées actives" value={activeTournees.length} sub={lateTournees.length?`${lateTournees.length} en retard`:'à l\'heure'} tone={lateTournees.length?'danger':undefined}/>
-                  <Tile icon="check" label="Arrêts livrés" value={deliveredStops} sub={`sur ${allStops.length} planifiés`}/>
-                  <Tile icon="package" label="Véhicules dispo" value={vehiculesLibres} sub="immobilisé(s): 0"/>
-                </div>
-                <div className="card p-4" style={{ minHeight:160 }}>
-                  <div className="eyebrow mb-2">Carte flotte</div>
-                  <div className="rounded-xl flex items-center justify-center" style={{ background:'var(--surface-2)', minHeight:140, color:'var(--muted)' }}>
-                    <div className="text-center text-xs"><Icon name="map" size={22} className="mx-auto mb-1"/> Carte en direct — ouvre Waze/Maps depuis chaque tournée</div>
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                  {activeTournees.length===0 && <EmptyState icon="truck" title="Aucune tournée active" body="Crée une nouvelle tournée pour démarrer la journée."/>}
-                  {activeTournees.map(t => {
-                    const stops = t.stops||[];
-                    const delivered = stops.filter(s=>s.statut==='livre').length;
-                    const ch = chauffeurById[t.chauffeurId];
-                    return (
-                      <div key={t.id} className="card p-4 flex items-center justify-between gap-3 cursor-pointer" onClick={()=>setSelectedChauffeur(t.chauffeurId)}>
-                        <div className="min-w-0">
-                          <div className="font-semibold">Tournée {t.numero||t.id}</div>
-                          <div className="text-xs" style={{ color:'var(--muted)' }}>{ch ? (ch.nom||ch.matricule) : 'Chauffeur —'} · {t.zone||'zone —'} · {delivered}/{stops.length} livrés</div>
-                        </div>
-                        <StatusChip statut={t.etapeActuelle==='en_route'?'en_route':(t.statut==='terminee'?'livre':'a_venir')}/>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+{section === 'depannages' && (
+<div className="flex flex-col gap-2">
+{openDepannages.length===0 && <EmptyState icon="shield" title="Aucun dépannage en cours" body="Tout roule normalement."/>}
+{openDepannages.map(d => {
+const ph = pharmaById[d.pharmacieId] || {};
+return (
+<div key={d.id} className="card p-4 flex items-center justify-between gap-3">
+<div className="min-w-0">
+<div className="font-semibold">{ph.nom || 'Pharmacie'}</div>
+<div className="text-xs" style={{ color:'var(--muted)' }}>{d.description}</div>
+</div>
+<button className="btn btn-soft shrink-0" onClick={()=>setAssignDep(d)}>Traiter</button>
+</div>
+);
+})}
+</div>
+)}
 
-            {section === 'depannages' && (
-              <div className="flex flex-col gap-2">
-                {openDepannages.length===0 && <EmptyState icon="shield" title="Aucun dépannage en cours" body="Tout roule normalement."/>}
-                {openDepannages.map(d => {
-                  const ph = pharmaById[d.pharmacieId] || {};
-                  return (
-                    <div key={d.id} className="card p-4 flex items-center justify-between gap-3">
-                      <div className="min-w-0">
-                        <div className="font-semibold">{ph.nom || 'Pharmacie'}</div>
-                        <div className="text-xs" style={{ color:'var(--muted)' }}>{d.description}</div>
-                      </div>
-                      <button className="btn btn-soft shrink-0" onClick={()=>setAssignDep(d)}>Traiter</button>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+{section === 'planning' && (
+<div className="flex flex-col gap-2">
+{chauffeurs.docs.map(c => (
+<div key={c.id} className="card p-4 flex items-center justify-between">
+<div className="flex items-center gap-2"><Icon name="user" size={16}/> <span className="font-semibold">{c.nom||c.matricule}</span></div>
+<span className="text-xs" style={{ color:'var(--muted)' }}>{c.vehiculeLabel||'Véhicule non assigné'}</span>
+</div>
+))}
+</div>
+)}
 
-            {section === 'planning' && (
-              <div className="flex flex-col gap-2">
-                {chauffeurs.docs.map(c => (
-                  <div key={c.id} className="card p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2"><Icon name="user" size={16}/> <span className="font-semibold">{c.nom||c.matricule}</span></div>
-                    <span className="text-xs" style={{ color:'var(--muted)' }}>{c.vehiculeLabel||'Véhicule non assigné'}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+{section === 'vehicules' && (
+<div className="flex flex-col gap-2">
+{chauffeurs.docs.map(c => c.vehiculeLabel && (
+<div key={c.id} className="card p-4 flex items-center justify-between">
+<div className="flex items-center gap-2"><Icon name="truck" size={16}/> {c.vehiculeLabel}</div>
+<span className="chip" style={{ color:'var(--success)', background:'var(--success-soft)' }}>En service</span>
+</div>
+))}
+</div>
+)}
 
-            {section === 'vehicules' && (
-              <div className="flex flex-col gap-2">
-                {chauffeurs.docs.map(c => c.vehiculeLabel && (
-                  <div key={c.id} className="card p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2"><Icon name="truck" size={16}/> {c.vehiculeLabel}</div>
-                    <span className="chip" style={{ color:'var(--success)', background:'var(--success-soft)' }}>En service</span>
-                  </div>
-                ))}
-              </div>
-            )}
+{section === 'retours' && (
+<div className="flex flex-col gap-2">
+{tournees.docs.filter(t=>t.clotureDepot).map(t => (
+<div key={t.id} className="card p-4 flex items-center justify-between">
+<div className="font-semibold">Tournée {t.numero||t.id}</div>
+<span className="text-xs font-mono">{t.clotureDepot.bacsVidesConfirmes||0} bacs rapportés</span>
+</div>
+))}
+</div>
+)}
+</div>
 
-            {section === 'retours' && (
-              <div className="flex flex-col gap-2">
-                {tournees.docs.filter(t=>t.clotureDepot).map(t => (
-                  <div key={t.id} className="card p-4 flex items-center justify-between">
-                    <div className="font-semibold">Tournée {t.numero||t.id}</div>
-                    <span className="text-xs font-mono">{t.clotureDepot.bacsVidesConfirmes||0} bacs rapportés</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+<aside className="exp-side">
+{current && (
+<div className="card p-3">
+<div className="eyebrow mb-1">Chauffeur suivi</div>
+<div className="font-semibold">{current.nom||current.matricule}</div>
+{currentTournee && (
+<>
+<div className="h-2 rounded-full surface2 overflow-hidden mt-2">
+<div className="h-full" style={{ width:((currentTournee.stops||[]).filter(s=>s.statut==='livre').length / Math.max(1,(currentTournee.stops||[]).length) * 100)+'%', background:'var(--success)' }}/>
+</div>
+<div className="text-xs mt-1" style={{ color:'var(--muted)' }}>Tournée {currentTournee.numero||currentTournee.id}</div>
+</>
+)}
+</div>
+)}
+<div className="flex-1 min-h-0"><JournalPanel db={db} journal={journal} roleLabel="Exploitation"/></div>
+</aside>
+</div>
 
-          <aside className="exp-side">
-            {current && (
-              <div className="card p-3">
-                <div className="eyebrow mb-1">Chauffeur suivi</div>
-                <div className="font-semibold">{current.nom||current.matricule}</div>
-                {currentTournee && (
-                  <>
-                    <div className="h-2 rounded-full surface2 overflow-hidden mt-2">
-                      <div className="h-full" style={{ width:((currentTournee.stops||[]).filter(s=>s.statut==='livre').length / Math.max(1,(currentTournee.stops||[]).length) * 100)+'%', background:'var(--success)' }}/>
-                    </div>
-                    <div className="text-xs mt-1" style={{ color:'var(--muted)' }}>Tournée {currentTournee.numero||currentTournee.id}</div>
-                  </>
-                )}
-              </div>
-            )}
-            <div className="flex-1 min-h-0"><JournalPanel db={db} journal={journal} roleLabel="Exploitation"/></div>
-          </aside>
-      </div>
-
-      {showNew && <NewTourneeModal db={db} chauffeurs={chauffeurs.docs} pharmacies={pharmacies.docs} onClose={()=>setShowNew(false)}/>}
-      {assignDep && (
-        <Modal title="Traiter le dépannage" onClose={()=>setAssignDep(null)}>
-          <p className="text-sm mb-3">{assignDep.description}</p>
-          <button className="btn btn-accent justify-center w-full" onClick={()=>{
-            db.doc('depannages/'+assignDep.id).update({ statut:'resolu', resoluLe: Date.now() });
-            db.collection('journal').add({ auteur:'Exploitation', message:'Dépannage résolu.', creeLe: Date.now() });
-            setAssignDep(null);
-          }}>Marquer résolu</button>
-        </Modal>
-      )}
-    </>
-  );
+{showNew && <NewTourneeModal db={db} chauffeurs={chauffeurs.docs} pharmacies={pharmacies.docs} onClose={()=>setShowNew(false)}/>}
+{assignDep && (
+<Modal title="Traiter le dépannage" onClose={()=>setAssignDep(null)}>
+<p className="text-sm mb-3">{assignDep.description}</p>
+<button className="btn btn-accent justify-center w-full" onClick={()=>{
+db.doc('depannages/'+assignDep.id).update({ statut:'resolu', resoluLe: Date.now() });
+db.collection('journal').add({ auteur:'Exploitation', message:'Dépannage résolu.', creeLe: Date.now() });
+setAssignDep(null);
+}}>Marquer résolu</button>
+</Modal>
+)}
+</>
+);
 }
 
 /* ═══════════════════════ ADMIN ═══════════════════════ */
 function AdminList({ db, title, path, fields, items }){
-  const [form, setForm] = useState({});
-  const add = () => {
-    if (!db || !fields.every(f => !f.required || form[f.key])) return;
-    db.collection(path).add({ ...form, creeLe: Date.now() });
-    setForm({});
-  };
-  return (
-    <div className="card p-4 flex flex-col gap-3">
-      <h3 className="font-display font-bold">{title}</h3>
-      <div className="grid gap-2" style={{ gridTemplateColumns:`repeat(${fields.length},1fr) auto` }}>
-        {fields.map(f => (
-          <input key={f.key} className="input" placeholder={f.label} value={form[f.key]||''}
-            onChange={e=>setForm(s=>({...s,[f.key]:e.target.value}))}/>
-        ))}
-        <button className="btn btn-accent" onClick={add}><Icon name="plus" size={15}/></button>
-      </div>
-      <div className="flex flex-col gap-1.5">
-        {items.map(it => (
-          <div key={it.id} className="text-sm flex items-center gap-2 surface2 rounded-lg px-3 py-2">
-            {fields.map(f => <span key={f.key}>{it[f.key]}</span>)}
-          </div>
-        ))}
-        {items.length===0 && <div className="text-xs" style={{ color:'var(--muted)' }}>Aucun élément pour l'instant.</div>}
-      </div>
-    </div>
-  );
+const [form, setForm] = useState({});
+const add = () => {
+if (!db || !fields.every(f => !f.required || form[f.key])) return;
+db.collection(path).add({ ...form, creeLe: Date.now() });
+setForm({});
+};
+return (
+<div className="card p-4 flex flex-col gap-3">
+<h3 className="font-display font-bold">{title}</h3>
+<div className="grid gap-2" style={{ gridTemplateColumns:`repeat(${fields.length},1fr) auto` }}>
+{fields.map(f => (
+<input key={f.key} className="input" placeholder={f.label} value={form[f.key]||''}
+onChange={e=>setForm(s=>({...s,[f.key]:e.target.value}))}/>
+))}
+<button className="btn btn-accent" onClick={add}><Icon name="plus" size={15}/></button>
+</div>
+<div className="flex flex-col gap-1.5">
+{items.map(it => (
+<div key={it.id} className="text-sm flex items-center gap-2 surface2 rounded-lg px-3 py-2">
+{fields.map(f => <span key={f.key}>{it[f.key]}</span>)}
+</div>
+))}
+{items.length===0 && <div className="text-xs" style={{ color:'var(--muted)' }}>Aucun élément pour l'instant.</div>}
+</div>
+</div>
+);
 }
 
 function AdminView({ db, chauffeurs, vehicules, pharmacies }){
-  return (
-    <div className="admin-main">
-      <h2 className="font-display font-extrabold text-lg mb-4">Administration</h2>
-      <div className="flex flex-col gap-4">
-        <AdminList db={db} title="Chauffeurs" path="chauffeurs" items={chauffeurs.docs}
-          fields={[{key:'nom',label:'Nom',required:true},{key:'matricule',label:'Matricule (ex. MD-1701)',required:true},{key:'vehiculeLabel',label:'Véhicule assigné'}]}/>
-        <AdminList db={db} title="Véhicules" path="vehicules" items={vehicules.docs}
-          fields={[{key:'immatriculation',label:'Immatriculation',required:true},{key:'type',label:'Type (frigo, VL…)'}]}/>
-        <AdminList db={db} title="Pharmacies" path="pharmacies" items={pharmacies.docs}
-          fields={[{key:'nom',label:'Nom',required:true},{key:'adresse',label:'Adresse'},{key:'ville',label:'Ville'}]}/>
-      </div>
-    </div>
-  );
+return (
+<div className="admin-main">
+<h2 className="font-display font-extrabold text-lg mb-4">Administration</h2>
+<div className="flex flex-col gap-4">
+<AdminList db={db} title="Chauffeurs" path="chauffeurs" items={chauffeurs.docs}
+fields={[{key:'nom',label:'Nom',required:true},{key:'matricule',label:'Matricule (ex. MD-1701)',required:true},{key:'vehiculeLabel',label:'Véhicule assigné'}]}/>
+<AdminList db={db} title="Véhicules" path="vehicules" items={vehicules.docs}
+fields={[{key:'immatriculation',label:'Immatriculation',required:true},{key:'type',label:'Type (frigo, VL…)'}]}/>
+<AdminList db={db} title="Pharmacies" path="pharmacies" items={pharmacies.docs}
+fields={[{key:'nom',label:'Nom',required:true},{key:'adresse',label:'Adresse'},{key:'ville',label:'Ville'}]}/>
+</div>
+</div>
+);
 }
 
 /* ═══════════════════════ OCP (read-only) ═══════════════════════ */
 function OcpView({ tournees, depannages, chauffeurs }){
-  const activeTournees = tournees.docs.filter(t=>t.statut!=='terminee');
-  const allStops = tournees.docs.flatMap(t=>t.stops||[]);
-  const delivered = allStops.filter(s=>s.statut==='livre').length;
-  const openDep = depannages.docs.filter(d=>d.statut!=='resolu');
-  const chauffeurById = useMemo(()=>{ const m={}; chauffeurs.docs.forEach(c=>m[c.id]=c); return m; }, [chauffeurs.docs]);
-  return (
-    <div className="admin-main">
-      <h2 className="font-display font-extrabold text-lg mb-4">Suivi OCP <span className="eyebrow" style={{fontWeight:700}}>· lecture seule</span></h2>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-        <Tile icon="truck" label="Tournées actives" value={activeTournees.length}/>
-        <Tile icon="check" label="Arrêts livrés" value={delivered} sub={`sur ${allStops.length}`}/>
-        <Tile icon="wrench" label="Dépannages ouverts" value={openDep.length} tone={openDep.length?'danger':undefined}/>
-      </div>
-      <div className="flex flex-col gap-2">
-        {activeTournees.map(t => {
-          const stops = t.stops||[]; const del = stops.filter(s=>s.statut==='livre').length;
-          const ch = chauffeurById[t.chauffeurId];
-          return (
-            <div key={t.id} className="card p-4 flex items-center justify-between">
-              <div><div className="font-semibold">Tournée {t.numero||t.id}</div><div className="text-xs" style={{color:'var(--muted)'}}>{ch?(ch.nom||ch.matricule):'—'} · {del}/{stops.length}</div></div>
-              <StatusChip statut={t.etapeActuelle==='en_route'?'en_route':'a_venir'}/>
-            </div>
-          );
-        })}
-        {activeTournees.length===0 && <EmptyState icon="eye" title="Aucune tournée en cours" body="Rien à surveiller pour l'instant."/>}
-      </div>
-    </div>
-  );
+const activeTournees = tournees.docs.filter(t=>t.statut!=='terminee');
+const allStops = tournees.docs.flatMap(t=>t.stops||[]);
+const delivered = allStops.filter(s=>s.statut==='livre').length;
+const openDep = depannages.docs.filter(d=>d.statut!=='resolu');
+const chauffeurById = useMemo(()=>{ const m={}; chauffeurs.docs.forEach(c=>m[c.id]=c); return m; }, [chauffeurs.docs]);
+return (
+<div className="admin-main">
+<h2 className="font-display font-extrabold text-lg mb-4">Suivi OCP <span className="eyebrow" style={{fontWeight:700}}>· lecture seule</span></h2>
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+<Tile icon="truck" label="Tournées actives" value={activeTournees.length}/>
+<Tile icon="check" label="Arrêts livrés" value={delivered} sub={`sur ${allStops.length}`}/>
+<Tile icon="wrench" label="Dépannages ouverts" value={openDep.length} tone={openDep.length?'danger':undefined}/>
+</div>
+<div className="flex flex-col gap-2">
+{activeTournees.map(t => {
+const stops = t.stops||[]; const del = stops.filter(s=>s.statut==='livre').length;
+const ch = chauffeurById[t.chauffeurId];
+return (
+<div key={t.id} className="card p-4 flex items-center justify-between">
+<div><div className="font-semibold">Tournée {t.numero||t.id}</div><div className="text-xs" style={{color:'var(--muted)'}}>{ch?(ch.nom||ch.matricule):'—'} · {del}/{stops.length}</div></div>
+<StatusChip statut={t.etapeActuelle==='en_route'?'en_route':'a_venir'}/>
+</div>
+);
+})}
+{activeTournees.length===0 && <EmptyState icon="eye" title="Aucune tournée en cours" body="Rien à surveiller pour l'instant."/>}
+</div>
+</div>
+);
 }
 
 /* ═══════════════════════ PHARMACIE ═══════════════════════ */
 function PharmacieView({ pharmacies, tournees, chauffeurs }){
-  const [pharmaId, setPharmaId] = useState(null);
-  const pharma = pharmacies.docs.find(p=>p.id===pharmaId) || null;
-  const stopInfo = useMemo(() => {
-    for (const t of tournees.docs) {
-      const s = (t.stops||[]).find(s=>s.pharmacieId===pharmaId);
-      if (s) return { tournee:t, stop:s };
-    }
-    return null;
-  }, [tournees.docs, pharmaId]);
-  const chauffeur = stopInfo ? chauffeurs.docs.find(c=>c.id===stopInfo.tournee.chauffeurId) : null;
+const [pharmaId, setPharmaId] = useState(null);
+const pharma = pharmacies.docs.find(p=>p.id===pharmaId) || null;
+const stopInfo = useMemo(() => {
+for (const t of tournees.docs) {
+const s = (t.stops||[]).find(s=>s.pharmacieId===pharmaId);
+if (s) return { tournee:t, stop:s };
+}
+return null;
+}, [tournees.docs, pharmaId]);
+const chauffeur = stopInfo ? chauffeurs.docs.find(c=>c.id===stopInfo.tournee.chauffeurId) : null;
 
-  return (
-    <div className="mobile-view">
-      {!pharmaId ? (
-        <div className="flex flex-col gap-3">
-          <div className="eyebrow">Choisir ma pharmacie</div>
-          {pharmacies.docs.map(p => (
-            <button key={p.id} className="card p-3 text-left" onClick={()=>setPharmaId(p.id)}>
-              <div className="font-semibold">{p.nom}</div>
-              <div className="text-xs" style={{ color:'var(--muted)' }}>{p.adresse}, {p.ville}</div>
-            </button>
-          ))}
-          {pharmacies.docs.length===0 && <EmptyState icon="pin" title="Aucune pharmacie" body="Ajoute des pharmacies depuis Admin."/>}
-        </div>
-      ) : (
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <div className="font-display font-bold">{pharma?.nom}</div>
-            <button className="opacity-60" onClick={()=>setPharmaId(null)}><Icon name="x" size={16}/></button>
-          </div>
-          {!stopInfo && <EmptyState icon="clock" title="Aucune livraison prévue" body="Aucune tournée ne dessert cette pharmacie aujourd'hui."/>}
-          {stopInfo && (
-            <div className="card p-4 flex flex-col gap-3">
-              <StatusChip statut={stopInfo.stop.statut}/>
-              <div className="text-sm">Chauffeur : {chauffeur ? (chauffeur.nom||chauffeur.matricule) : '—'}</div>
-              <div className="text-sm">Tournée {stopInfo.tournee.numero||stopInfo.tournee.id}</div>
-              {stopInfo.stop.statut==='en_route' && <div className="text-xs" style={{color:'var(--info)'}}>Le chauffeur est en route vers votre officine.</div>}
-              {stopInfo.stop.statut==='arrive' && <div className="text-xs" style={{color:'var(--warning)'}}>Le chauffeur est arrivé.</div>}
-              {stopInfo.stop.statut==='livre' && (
-                <>
-                  <div className="text-xs" style={{color:'var(--success)'}}>Colis livré à {fmtTime(stopInfo.stop.heureLivraison)}.</div>
-                  <PhotoField label="Photo colis à reprendre"/>
-                </>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-  );
+return (
+<div className="mobile-view">
+{!pharmaId ? (
+<div className="flex flex-col gap-3">
+<div className="eyebrow">Choisir ma pharmacie</div>
+{pharmacies.docs.map(p => (
+<button key={p.id} className="card p-3 text-left" onClick={()=>setPharmaId(p.id)}>
+<div className="font-semibold">{p.nom}</div>
+<div className="text-xs" style={{ color:'var(--muted)' }}>{p.adresse}, {p.ville}</div>
+</button>
+))}
+{pharmacies.docs.length===0 && <EmptyState icon="pin" title="Aucune pharmacie" body="Ajoute des pharmacies depuis Admin."/>}
+</div>
+) : (
+<div className="flex flex-col gap-4">
+<div className="flex items-center justify-between">
+<div className="font-display font-bold">{pharma?.nom}</div>
+<button className="opacity-60" onClick={()=>setPharmaId(null)}><Icon name="x" size={16}/></button>
+</div>
+{!stopInfo && <EmptyState icon="clock" title="Aucune livraison prévue" body="Aucune tournée ne dessert cette pharmacie aujourd'hui."/>}
+{stopInfo && (
+<div className="card p-4 flex flex-col gap-3">
+<StatusChip statut={stopInfo.stop.statut}/>
+<div className="text-sm">Chauffeur : {chauffeur ? (chauffeur.nom||chauffeur.matricule) : '—'}</div>
+<div className="text-sm">Tournée {stopInfo.tournee.numero||stopInfo.tournee.id}</div>
+{stopInfo.stop.statut==='en_route' && <div className="text-xs" style={{color:'var(--info)'}}>Le chauffeur est en route vers votre officine.</div>}
+{stopInfo.stop.statut==='arrive' && <div className="text-xs" style={{color:'var(--warning)'}}>Le chauffeur est arrivé.</div>}
+{stopInfo.stop.statut==='livre' && (
+<>
+<div className="text-xs" style={{color:'var(--success)'}}>Colis livré à {fmtTime(stopInfo.stop.heureLivraison)}.</div>
+<PhotoField label="Photo colis à reprendre"/>
+</>
+)}
+</div>
+)}
+</div>
+)}
+</div>
+);
 }
 
 /* ═══════════════════════ APP shell ═══════════════════════ */
 const ROLES = [
-  { key:'terrain', label:'Terrain', icon:'truck' },
-  { key:'exploitation', label:'Exploitation', icon:'radio' },
-  { key:'admin', label:'Admin', icon:'settings' },
-  { key:'ocp', label:'OCP', icon:'eye' },
-  { key:'pharmacie', label:'Pharmacie', icon:'cross' },
+{ key:'terrain', label:'Terrain', icon:'truck' },
+{ key:'exploitation', label:'Exploitation', icon:'radio' },
+{ key:'admin', label:'Admin', icon:'settings' },
+{ key:'ocp', label:'OCP', icon:'eye' },
+{ key:'pharmacie', label:'Pharmacie', icon:'cross' },
 ];
 
 function getLockedRole(){
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const r = params.get('role');
-    if (r && ROLES.some(role => role.key === r)) return r;
-  } catch(e) {}
-  return null;
+try {
+const params = new URLSearchParams(window.location.search);
+const r = params.get('role');
+if (r && ROLES.some(role => role.key === r)) return r;
+} catch(e) {}
+return null;
 }
 
 function App(){
-  const { db, status } = useFirebase();
-  const chauffeurs = useCollection(db, 'chauffeurs');
-  const vehicules = useCollection(db, 'vehicules');
-  const pharmacies = useCollection(db, 'pharmacies');
-  const tournees = useCollection(db, 'tournees');
-  const depannages = useCollection(db, 'depannages');
-  const journal = useJournal(db);
-  const lockedRole = useMemo(() => getLockedRole(), []);
-  const [role, setRole] = useState(lockedRole || 'terrain');
+const { db, status } = useFirebase();
+const chauffeurs = useCollection(db, 'chauffeurs');
+const vehicules = useCollection(db, 'vehicules');
+const pharmacies = useCollection(db, 'pharmacies');
+const tournees = useCollection(db, 'tournees');
+const depannages = useCollection(db, 'depannages');
+const journal = useJournal(db);
+const lockedRole = useMemo(() => getLockedRole(), []);
+const [role, setRole] = useState(lockedRole || 'terrain');
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b" style={{ borderColor:'var(--border)', background:'var(--surface)' }}>
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
-          <div className="flex items-center gap-2.5">
-            <div className="rounded-lg p-1.5" style={{ background:'var(--accent)' }}><Icon name="cross" size={16} style={{color:'#fff'}}/></div>
-            <div>
-              <div className="font-display font-extrabold leading-none">PharmaLogistics IA</div>
-              <div className="text-[11px]" style={{ color:'var(--muted)' }}>Distribution pharmaceutique</div>
-            </div>
-          </div>
-          {!lockedRole && (
-            <div className="flex items-center gap-1 overflow-x-auto">
-              {ROLES.map(r => (
-                <button key={r.key} className="role-pill" data-active={role===r.key} onClick={()=>setRole(r.key)}>
-                  <Icon name={r.icon} size={14}/> {r.label}
-                </button>
-              ))}
-            </div>
-          )}
-          <div className="flex items-center gap-1.5 text-xs" style={{ color:'var(--muted)' }}>
-            <span className="dot" style={{ background: status==='ready' ? 'var(--success)' : 'var(--warning)' }}/>
-            {status==='ready' ? 'Connecté' : status==='error' ? 'Hors ligne' : 'Connexion…'}
-          </div>
-        </div>
-      </header>
+return (
+<div className="min-h-screen flex flex-col">
+<header className="border-b" style={{ borderColor:'var(--border)', background:'var(--surface)' }}>
+<div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
+<div className="flex items-center gap-2.5">
+<div className="rounded-lg p-1.5" style={{ background:'var(--accent)' }}><Icon name="cross" size={16} style={{color:'#fff'}}/></div>
+<div>
+<div className="font-display font-extrabold leading-none">PharmaLogistics IA</div>
+<div className="text-[11px]" style={{ color:'var(--muted)' }}>Distribution pharmaceutique</div>
+</div>
+</div>
+{!lockedRole && (
+<div className="flex items-center gap-1 overflow-x-auto">
+{ROLES.map(r => (
+<button key={r.key} className="role-pill" data-active={role===r.key} onClick={()=>setRole(r.key)}>
+<Icon name={r.icon} size={14}/> {r.label}
+</button>
+))}
+</div>
+)}
+<div className="flex items-center gap-1.5 text-xs" style={{ color:'var(--muted)' }}>
+<span className="dot" style={{ background: status==='ready' ? 'var(--success)' : 'var(--warning)' }}/>
+{status==='ready' ? 'Connecté' : status==='error' ? 'Hors ligne' : 'Connexion…'}
+</div>
+</div>
+</header>
 
-      <main className="flex-1" style={{ display:'flex' }}>
-        {status !== 'ready' ? (
-          <div className="text-sm pulse" style={{ color:'var(--muted)', margin:'40px auto' }}>Connexion à la base de données…</div>
-        ) : (
-          <div style={{ width:'100%' }}>
-            {role==='terrain' && <TerrainView db={db} chauffeurs={chauffeurs} tournees={tournees} pharmacies={pharmacies} journal={journal}/>}
-            {role==='exploitation' && <ExploitationView db={db} chauffeurs={chauffeurs} tournees={tournees} pharmacies={pharmacies} depannages={depannages} journal={journal}/>}
-            {role==='admin' && <AdminView db={db} chauffeurs={chauffeurs} vehicules={vehicules} pharmacies={pharmacies}/>}
-            {role==='ocp' && <OcpView tournees={tournees} depannages={depannages} chauffeurs={chauffeurs}/>}
-            {role==='pharmacie' && <PharmacieView pharmacies={pharmacies} tournees={tournees} chauffeurs={chauffeurs}/>}
-          </div>
-        )}
-      </main>
-    </div>
-  );
+<main className="flex-1" style={{ display:'flex' }}>
+{status !== 'ready' ? (
+<div className="text-sm pulse" style={{ color:'var(--muted)', margin:'40px auto' }}>Connexion à la base de données…</div>
+) : (
+<div style={{ width:'100%' }}>
+{role==='terrain' && <TerrainView db={db} chauffeurs={chauffeurs} tournees={tournees} pharmacies={pharmacies} journal={journal}/>}
+{role==='exploitation' && <ExploitationView db={db} chauffeurs={chauffeurs} tournees={tournees} pharmacies={pharmacies} depannages={depannages} journal={journal}/>}
+{role==='admin' && <AdminView db={db} chauffeurs={chauffeurs} vehicules={vehicules} pharmacies={pharmacies}/>}
+{role==='ocp' && <OcpView tournees={tournees} depannages={depannages} chauffeurs={chauffeurs}/>}
+{role==='pharmacie' && <PharmacieView pharmacies={pharmacies} tournees={tournees} chauffeurs={chauffeurs}/>}
+</div>
+)}
+</main>
+</div>
+);
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function(){
-      navigator.serviceWorker.register('sw.js').catch(function(){ /* ignore */ });
-    });
-  }
+if ('serviceWorker' in navigator) {
+window.addEventListener('load', function(){
+navigator.serviceWorker.register('sw.js').catch(function(){ /* ignore */ });
+});
+}
 </script>
 </body>
 </html>
+
